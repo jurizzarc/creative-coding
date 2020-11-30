@@ -5,7 +5,7 @@ body {
     margin: 0;
     line-height: 1.4;
     color: #1f1f1f;
-    background-color: #f5f5f5;
+    background-color: #1f1f1f;
 }
 
 a {
@@ -13,9 +13,17 @@ a {
     color: #000;
 }
 
+a:hover {
+    color: #6c6c6c;
+}
+
 h1.title {
     margin-top: 0;
     margin-bottom: 5rem;
+    color: #fff;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #fff;
 }
 
 .wrapper {
@@ -25,7 +33,7 @@ h1.title {
 }
 
 .auto-grid {
-    --auto-grid-min-size: 22rem;
+    --auto-grid-min-size: 16rem;
 }
 
 .auto-grid > * {
@@ -33,14 +41,14 @@ h1.title {
 }
 
 .auto-grid > * + * {
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 @supports(display: grid) {
     .auto-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 2fr));
-        grid-gap: 2rem;
+        grid-gap: 3rem;
     }
 
     .auto-grid > * {
@@ -53,30 +61,33 @@ h1.title {
 }
 
 .grid-item {
-    background: #fff;
-    padding: 1.125rem;
+    background-color: #fff;
     overflow: hidden;
 }
 
 .grid-item-img {
-    width: 50%;
-    float: left;
+    display: block;
 }
 
 .grid-item-img img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
     vertical-align: middle;
 }
 
 .grid-item-body {
-    width: 50%;
-    float: left;
-    overflow: hidden;
+    padding: 1.25rem 0.875rem;
 }
 
-.grid-item-body h3 {
-    margin-top: 0;
+.grid-item-body h4 {
+    text-transform: lowercase;
     font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.125rem;
+}
+
+.grid-item-body p {
+    margin: 0;
+    text-transform: lowercase;
+    font-size: 0.938rem;
 }
