@@ -1,11 +1,5 @@
-<!-- **Introduction (23 Sep 20)**
-- p5.js introduction (simple shapes and drawing)
-- the uses of the Modulo % operator
-- drawing rectangles using for loops
-- colour theory. changing the colour mode from RGB to HSB with the colorMode() function -->
-
 # Colour Modes and Loops
-- Exercise 01 – 23 Sep 2020
+Exercise 01 – 23 Sep 2020
 
 ### Introduction to p5
 Initial environment properties such as the width and height of the canvas, background colour, and colour mode are defined in the *setup()* function. This function is only called once when the program starts.
@@ -26,5 +20,27 @@ function draw() {
     noStroke();
     fill(255, 0, 0);
     rect(20, 20, 100, 100);
+}
+```
+
+### Colour Mode
+By default, the parameters passed for *fill()*, *stroke()*, and *background()* functions are defined by values between 0 and 255 using the RGB colour model. To use the HSB colour system, Setting *colorMode(HSB)* in the *setup()* function changes the way p5.js interprets colour data.
+
+In the code snippet below, the colour mode is set to HSB. The range for the hue is set to the width of the canvas. The range for the saturation is set to the height of the canvas, and the range for the brightness is set to 100.
+
+`colorMode(HSB, width, height, 100)`
+
+### Multi-coloured tile grid
+One way of creating a tile grid that has different colours is by drawing squares on the canvas with a nested for loop, and setting the colour of each square to its position on the canvas.
+
+```
+function draw() {
+    let step = 10;
+    for (let gridX = 0; gridX < width; gridX += step) {
+    for (let gridY = 0; gridY < height;  gridY += step) {
+      fill(gridX, height - gridY, 100);
+      rect(gridX, gridY, 20, 20);
+    }
+  }
 }
 ```
