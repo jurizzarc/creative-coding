@@ -1,4 +1,4 @@
-# Creative Coding CA1 – Wrapping Paper
+<!-- # Creative Coding CA1 – Wrapping Paper
 
 ![Screenshot of the Canvas](https://github.com/IADT-John-Montayne/shape-pattern-jurizzarc/blob/master/Main%20Exercises/wrapping-paper/canvas_screenshot.png)
 
@@ -9,4 +9,9 @@
 
 ---
 
-Samples of weave patterns are in the *samples* folder.
+Samples of weave patterns are in the *samples* folder. -->
+
+# Wrapping Paper (Final)
+Project - 24 Nov 2020
+
+For our first assignment, we created a wrapping paper pattern using the p5.js library that will be printed out on an A3 sheet of paper. The pattern I made was inspired by the basic types of weaving patterns: plain, twill, and satin.
