@@ -18,7 +18,7 @@ For our first assignment, we created a wrapping paper pattern using the p5.js li
 
 The canvas contains a grid, and this grid is made up of 100 grid cells. A warp and a weft thread is drawn on each grid cell. On the canvas, the warp threads look like vertical rectangles, while the weft threads look like horizontal rectangles. Depending on the type of weaving pattern chosen by the user, the warp is either drawn over the weft, or it is drawn under the weft. The grid and the threads are objects created from a class called *Thread*.
 
-The properties of an object created from the *Thread* class are the index numbers *i* and *j*, the width and height of the cell, and the size of the thread. 
+The properties of an object created from the *Thread* class are the index numbers *i* and *j*, the width and height of the grid cell, and the size of the thread. 
 
 ```
 class Thread {
@@ -110,7 +110,7 @@ render() {
 }
 ```
 
-Weave is the interlacing of warp and weft threads at right angles in order to produce a woven fabric. To imitate this in p5.js, I started with the simplest of all basic weaves which is the plain weave. The plain weave is made by interlacing warp and weft threads in an alternate manner.
+Weave is the interlacing of warp and weft threads at right angles in order to produce a woven fabric. To imitate this in p5.js, I started with the simplest of all basic weaves which is the plain weave. 
 
 The purpose of the index numbers that are set to the *this.i* and *this.j* properties is so that I can assign each grid cell with a number and to make sure that the warp and weft threads will be interlaced on the canvas depending on the type of weave chosen by the user. 
 
@@ -120,4 +120,105 @@ Initially, each grid cell were assigned two numbers, but to make the calculation
 let indexNum = this.i + this.j;
 ```
 
-To position the threads in the center of a grid cell, the value set to the *this.ts* property is multiplied to 2. I stored the product in the variable *threadPos*. This value will be later divided to the height or width of the grid cell. 
+To position the threads in the center of a grid cell, the value set to the *this.ts* property is multiplied to 2. I stored the product in the variable *threadPos*. This value will be later divided to the height or width of the grid cell. Four colours taken from the current colour palette on the canvas are also defined. I added the following lines of code after initialising *indexNum*.
+
+```
+let threadPos = this.ts * 2;
+let col1 = currentPalette[colorIndex[0]];
+let col2 = currentPalette[colorIndex[1]];
+let col3 = currentPalette[colorIndex[2]];
+let col4 = currentPalette[colorIndex[3]];
+```
+
+The plain weave is made by interlacing warp and weft threads in an alternate manner. To create this pattern, I used conditional statements to check if the index number of a grid cell is an even number. If it is, the warp thread is drawn over the weft thread. Otherwise, the weft thread is drawn over the warp thread.
+
+```
+if (weaveType == 'Plain') {
+    // Draw warp over weft
+    if (indexNum % 2 == 0) {
+        // Weft Threads
+        stroke(col1);
+        fill(col1);
+        rect(0, -this.ch/threadPos, this.cw, this.ch/this.ts);
+        stroke(col2);
+        fill(col2);
+        rect(0, this.ch/threadPos, this.cw, this.ch/this.ts);
+        // Warp Threads
+        stroke(col3)
+        fill(col3);
+        rect(-this.cw/threadPos, 0, this.cw/this.ts, this.ch);
+        stroke(col4);
+        fill(col4);
+        rect(this.cw/threadPos, 0, this.cw/this.ts, this.ch);
+    // Draw weft over warp
+    } else {
+        // Warp Threads
+        stroke(col3)
+        fill(col3);
+        rect(-this.cw/threadPos, 0, this.cw/this.ts, this.ch);
+        stroke(col4);
+        fill(col4);
+        rect(this.cw/threadPos, 0, this.cw/this.ts, this.ch);
+        // Weft Threads
+        stroke(col1);
+        fill(col1);
+        rect(0, -this.ch/threadPos, this.cw, this.ch/this.ts);
+        stroke(col2);
+        fill(col2);
+        rect(0, this.ch/threadPos, this.cw, this.ch/this.ts);
+    }
+}
+```
+
+The weft threads are created by placing two rectangles beside each other. The height of the weft thread is set to the height of the grid cell divided by the size of the thread. Its y position is set to the height of the grid cell divided by the value stored in the *threadPos* variable earlier. The height and the y position are set this way to make sure that the weft thread is horizontally centered in a grid cell. 
+
+The warp threads are created in a similar way, but in reverse. 
+
+The approach taken to generate a plain weave pattern was repeated to generate the twill and satin weave patterns. To reuse the code, in the class *Thread*, I created the method *makeWeave()* that takes two parameters: *_type* which refers to the type of the weave pattern and *_num* which refers to the integer the index number will be divided to.
+
+```
+makeWeave(_type, _num) {
+    let indexNum = this.i + this.j;
+    let threadPos = this.ts * 2; 
+    let col1 = currentPalette[colorIndex[0]];
+    let col2 = currentPalette[colorIndex[1]];
+    let col3 = currentPalette[colorIndex[2]];
+    let col4 = currentPalette[colorIndex[3]];
+
+    if (weaveType == _type) {
+        // Draw warp over weft
+        if (indexNum % _num == 0) {
+            // Weft Threads
+            stroke(col1);
+            fill(col1);
+            rect(0, -this.ch/threadPos, this.cw, this.ch / this.ts);
+            stroke(col2);
+            fill(col2);
+            rect(0, this.ch/threadPos, this.cw, this.ch / this.ts);
+            // Warp Threads
+            stroke(col3)
+            fill(col3);
+            rect(-this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+            stroke(col4);
+            fill(col4);
+            rect(this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+        // Draw weft over warp
+        } else {
+            // Warp Threads
+            stroke(col3)
+            fill(col3);
+            rect(-this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+            stroke(col4);
+            fill(col4);
+            rect(this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+            // Weft Threads
+            stroke(col1);
+            fill(col1);
+            rect(0, -this.ch/threadPos, this.cw, this.ch / this.ts);
+            stroke(col2);
+            fill(col2);
+            rect(0, this.ch/threadPos, this.cw, this.ch / this.ts);
+        }
+    }
+}
+```
