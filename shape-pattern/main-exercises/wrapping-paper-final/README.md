@@ -58,7 +58,7 @@ let weaveType = 'Plain';
 let threadSize = 3;
 ```
 
-*colorPalettes* holds an array of colour palettes for the pattern, each defined as an array of 4 hex values. *colorIndex* holds an array of the index position of the hex values. *paletteIndex* refers to the index position of the colour palette that is used on the canvas. The value stored in *currentPalette* changes then the user presses the right arrow key. This is one of the ways the user can interact with the canvas.
+*colorPalettes* holds an array of colour palettes for the pattern, each defined as an array of 4 hex values. *colorIndex* holds an array of the index position of the hex values. *paletteIndex* refers to the index position of the colour palette that is used on the canvas. The value stored in *paletteIndex* changes then the user presses the right arrow key. This is one of the ways the user can interact with the canvas.
 
 ```
 function keyPressed() {
@@ -221,4 +221,16 @@ makeWeave(_type, _num) {
         }
     }
 }
+```
+
+I then call the *makeWeave()* method in *render()*.
+
+```
+.
+.
+.
+this.makeWeave('Plain', 2);
+this.makeWeave('Twill', 3);
+this.makeWeave('Satin', 4);
+pop();
 ```
