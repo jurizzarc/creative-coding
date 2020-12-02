@@ -52,9 +52,34 @@ let numOfCells = 10;
 I then populate the *threads* array in *setup()* with the objects made from the *Thread* class. The array now holds 100 objects.
 
 ```
-for (let i = 0; i < numOfCells; i++) {
-    for (let j = 0; j < numOfCells; j++) {
-        threads.push(new Thread(i, j));
+function setup() {
+    createCanvas(canvasWidth, canvasHeight);
+    rectMode(CENTER);
+    smooth();
+    noLoop();
+
+    for (let i = 0; i < numOfCells; i++) {
+        for (let j = 0; j < numOfCells; j++) {
+            threads.push(new Thread(i, j));
+        }
     }
 }
 ```
+
+In the *Thread* class, I created a method called *render()*. When called, this method displays the grid and the weave pattern on the canvas. I made use of transformations so that each object made from the *Thread* class gets drawn within the canvas. 
+
+In the code snippet below,  the *render()* method generates a transparent square that has a black outline within the canvas. The point of origin is set to the x and y coordinates of the grid cell, added to half the width and height of the grid cell. Those values are added because *rectMode* is set to CENTER. Without those values, the grid would be positioned slightly off the canvas.
+
+```
+render() {
+    push();
+    let cellX = this.i * this.cw + this.cw / 2;
+    let cellY = this.j * this.ch + this.ch / 2;
+    translate(cellX, cellY);
+    noFill();
+    stroke('#000');
+    rect(0, 0, this.cw, this.ch);
+    pop();
+}
+```
+
