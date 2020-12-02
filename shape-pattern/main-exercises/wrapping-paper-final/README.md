@@ -42,6 +42,33 @@ let cellWidth = canvasWidth / numOfCells;
 let cellHeight = canvasHeight / numOfCells;
 ```
 
+The following are also global variables that are needed to create the threads.
+
+```
+const colorPalettes = [
+    ['#900C3E', '#50163F', '#FF5835', '#A90031'],
+    ['#B41D01', '#960000', '#FFCB18', '#FCB600'],
+    ['#DB1C1A', '#AE1417', '#3E8B54', '#2E5033'],
+    ['#004445', '#011C1D', '#6FB98F', '#2C7873']
+];
+let colorIndex = [0, 1, 2, 3];
+let paletteIndex = 0;
+let currentPalette;
+let weaveType = 'Plain';
+let threadSize = 3;
+```
+
+*colorPalettes* holds an array of colour palettes for the pattern, each defined as an array of 4 hex values. *colorIndex* holds an array of the index position of the hex values. *paletteIndex* refers to the index position of the colour palette that is used on the canvas. The value stored in *currentPalette* changes then the user presses the right arrow key. This is one of the ways the user can interact with the canvas.
+
+```
+function keyPressed() {
+    if (keyCode === RIGHT_ARROW) {
+        paletteIndex = (paletteIndex + 1) % colorPalettes.length;
+    } 
+    redraw();
+}
+```
+
 To create the thread objects, I first initialised an empty array in a global variable *threads*, and the number of cells is set to 10.
 
 ```
@@ -92,3 +119,5 @@ Initially, each grid cell were assigned two numbers, but to make the calculation
 ```
 let indexNum = this.i + this.j;
 ```
+
+To position the threads in the center of a grid cell, the value set to the *this.ts* property is multiplied to 2. I stored the product in the variable *threadPos*. This value will be later divided to the height or width of the grid cell. 
