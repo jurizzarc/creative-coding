@@ -68,7 +68,7 @@ function setup() {
 
 In the *Thread* class, I created a method called *render()*. When called, this method displays the grid and the weave pattern on the canvas. I made use of transformations so that each object made from the *Thread* class gets drawn within the canvas. 
 
-In the code snippet below,  the *render()* method generates a transparent square that has a black outline within the canvas. The point of origin is set to the x and y coordinates of the grid cell, added to half the width and height of the grid cell. Those values are added because *rectMode* is set to CENTER. Without those values, the grid would be positioned slightly off the canvas.
+In the code snippet below, the *render()* method generates a transparent square that has a black outline within the canvas. The point of origin is set to the x and y coordinates of the grid cell, added to half the width and height of the grid cell. Those values are added because *rectMode* is set to CENTER. Without those values, the grid would be positioned slightly off the canvas.
 
 ```
 render() {
@@ -83,3 +83,12 @@ render() {
 }
 ```
 
+Weave is the interlacing of warp and weft threads at right angles in order to produce a woven fabric. To imitate this in p5.js, I started with the simplest of all basic weaves which is the plain weave. The plain weave is made by interlacing warp and weft threads in an alternate manner.
+
+The purpose of the index numbers that are set to the *this.i* and *this.j* properties is so that I can assign each grid cell with a number and to make sure that the warp and weft threads will be interlaced on the canvas depending on the type of weave chosen by the user. 
+
+Initially, each grid cell were assigned two numbers, but to make the calculations easier, I added these two numbers together. For example, if a grid cell's *i* index number is 1 and its *j* index number is also 1 (1, 1) then its index number is 2. In the *render()* method, I added the following line of code before *pop()*.
+
+```
+let indexNum = this.i + this.j;
+```
