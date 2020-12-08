@@ -1,11 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wrapping Paper (Final)</title>
-    <!-- CSS Reset -->
-    <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
-    <link rel="stylesheet" href="../../../css/styles.css" type="text/css">
-  </head>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wrapping Paper (Final)</title>
+  <!-- CSS Reset -->
+  <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Mulish:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/styles.css" type="text/css">
+</head>
+
+<body>
+  <main>
+    <article>
+      <h2>Wrapping Paper (Final)</h2>
+      <h6>Project – 24 Nov 2020</h6>
+
+      <p>
+        For our first assignment, we created a wrapping paper pattern using the p5.js library. This pattern will be
+        printed out on
+        an A3 sheet of paper. The pattern I made was inspired by the basic types of weaving patterns: plain, twill, and
+        satin.
+      </p>
+
+      <p>
+        The canvas contains a grid, and this grid is made up of 100 grid cells. A warp and a weft thread is drawn on
+        each grid
+        cell. On the canvas, the warp threads look like vertical rectangles, while the weft threads look like horizontal
+        rectangles. Depending on the type of weaving pattern chosen by the user, the warp is either drawn over the weft,
+        or it
+        is drawn under the weft. The grid and the threads are objects created from a class called <em>Thread</em>.
+      </p>
+
+      <p>
+        The properties of an object created from the <em>Thread</em> class are the index numbers <em>i</em> and
+        <em>j</em>, the width and
+        height of the grid cell, and the size of the thread.
+      </p>
+
+      <pre>
+<code>class Thread {
+  constructor(_i, _j) {
+      this.i = _i;
+      this.j = _j;
+      this.cw = cellWidth;
+      this.ch = cellHeight;
+      this.ts = threadSize;
+  }
+}</code>
+        </pre>
+
+        <p>
+          The width and height of the grid cell depend on the width and height of the canvas and the number of grid cells. 
+          The following variables are defined globally.
+        </p>
+
+        <pre>
+<code>const canvasWidth = 1754;
+const canvasHeight = 2481;
+let numOfCells = 10;
+let cellWidth = canvasWidth / numOfCells;
+let cellHeight = canvasHeight / numOfCells;</code>
+        </pre>
+
+        <p>The following are also global variables that will be used to create the threads.</p>
+
+        <pre>
+<code>const colorPalettes = [
+  ['#900C3E', '#50163F', '#FF5835', '#A90031'],
+  ['#B41D01', '#960000', '#FFCB18', '#FCB600'],
+  ['#DB1C1A', '#AE1417', '#3E8B54', '#2E5033'],
+  ['#004445', '#011C1D', '#6FB98F', '#2C7873']
+];
+
+let colorIndex = [0, 1, 2, 3];
+let paletteIndex = 0;
+let currentPalette;
+let weaveType = 'Plain';
+let threadSize = 3;</code>
+        </pre>
+
+        <p>
+          <em>colorPalettes</em> holds an array of colour palettes for the pattern, each defined as an array of 4 hex values. 
+          <em>colorIndex</em> holds an array of the index position of the hex values. <em>paletteIndex</em> refers to the 
+          index position of the colour palette that is used on the canvas. The value stored in <em>paletteIndex</em> changes 
+          then the user presses the right arrow key. This is one of the ways the user can interact with the canvas.
+        </p>
+
+        <pre>
+<code>function keyPressed() {
+    if (keyCode === RIGHT_ARROW) {
+        paletteIndex = (paletteIndex + 1) % colorPalettes.length;
+    } 
+    redraw();
+}</code>
+        </pre>
+
+        <p>
+          To create the thread objects, I first initialised an empty array in a global variable <em>threads</em>, and the number 
+          of cells is set to 10.
+        </p>
+
+        <pre>
+<code>let threads = [];
+let numOfCells = 10;</code>
+        </pre>
+
+        <p>
+          I then populated the <em>threads</em> array in <em>setup()</em> with the objects made from the <em>Thread</em> class. 
+          The array now holds 100 objects.
+        </p>
+
+        <pre>
+<code>function setup() {
+    createCanvas(canvasWidth, canvasHeight);
+    rectMode(CENTER);
+    smooth();
+    noLoop();
+
+    for (let i = 0; i < numOfCells; i++) {
+        for (let j = 0; j < numOfCells; j++) {
+            threads.push(new Thread(i, j));
+        }
+    }
+}</code>
+        </pre>
+    </article>
+  </main>
+</body>
+
 </html>

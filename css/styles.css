@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&display=swap');
+html {
+    font-size: 100%;
+}
 
 body {
     font-family: 'Mulish', sans-serif;
-    margin: 0;
-    line-height: 1.4;
+    line-height: 1.5;
     color: #fff;
     background-color: #1f1f1f;
 }
@@ -29,7 +30,7 @@ h1.title {
 main {
     max-width: 65rem;
     margin: 0 auto;
-    padding: 5rem 1rem;
+    padding: 6rem 1rem;
 }
 
 .auto-grid {
@@ -91,4 +92,42 @@ main {
     text-transform: lowercase;
     font-size: 0.938rem;
     color: #1f1f1f;
+}
+
+article {
+    padding: 0 1rem;
+    max-width: 42rem;
+}
+
+article h2 {
+    font-size: 3.052rem;
+    line-height: 3.052rem;
+    margin-bottom: 0.75rem;
+}
+
+article h6 {
+    font-size: 1.25rem;
+    margin: 0 0 3rem 0;
+    font-weight: 400;
+}
+
+article p {
+    font-size: 1.25rem;
+    max-inline-size: 100%;
+}
+
+article p + p {
+    margin-top: 1.5rem;
+}
+
+pre {
+    background-color: #3b3b3b;
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    overflow-x: scroll;
+}
+
+pre code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
 }
