@@ -223,12 +223,9 @@ makeWeave(_type, _num) {
 }
 ```
 
-I then call the *makeWeave()* method in *render()*.
+I then call the *makeWeave()* method for each weave type in *render()*.
 
 ```
-.
-.
-.
 this.makeWeave('Plain', 2);
 this.makeWeave('Twill', 3);
 this.makeWeave('Satin', 4);
