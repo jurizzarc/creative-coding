@@ -4,7 +4,7 @@ body {
     font-family: 'Mulish', sans-serif;
     margin: 0;
     line-height: 1.4;
-    color: #1f1f1f;
+    color: #fff;
     background-color: #1f1f1f;
 }
 
@@ -26,7 +26,7 @@ h1.title {
     border-bottom: 2px solid #fff;
 }
 
-.wrapper {
+main {
     max-width: 65rem;
     margin: 0 auto;
     padding: 5rem 1rem;
@@ -90,4 +90,5 @@ h1.title {
     margin: 0;
     text-transform: lowercase;
     font-size: 0.938rem;
+    color: #1f1f1f;
 }
