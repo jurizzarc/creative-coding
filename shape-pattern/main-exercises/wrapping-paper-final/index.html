@@ -247,51 +247,51 @@ let col4 = currentPalette[colorIndex[3]];</code>
           to the integer the index number will be divided to.
         </p>
 
-<pre>
-  <code>makeWeave(_type, _num) {
-      let indexNum = this.i + this.j;
-      let threadPos = this.ts * 2; 
-      let col1 = currentPalette[colorIndex[0]];
-      let col2 = currentPalette[colorIndex[1]];
-      let col3 = currentPalette[colorIndex[2]];
-      let col4 = currentPalette[colorIndex[3]];
-  
-      if (weaveType == _type) {
-          // Draw warp over weft
-          if (indexNum % _num == 0) {
-              // Weft Threads
-              stroke(col1);
-              fill(col1);
-              rect(0, -this.ch/threadPos, this.cw, this.ch / this.ts);
-              stroke(col2);
-              fill(col2);
-              rect(0, this.ch/threadPos, this.cw, this.ch / this.ts);
-              // Warp Threads
-              stroke(col3)
-              fill(col3);
-              rect(-this.cw/threadPos, 0, this.cw / this.ts, this.ch);
-              stroke(col4);
-              fill(col4);
-              rect(this.cw/threadPos, 0, this.cw / this.ts, this.ch);
-          // Draw weft over warp
-          } else {
-              // Warp Threads
-              stroke(col3)
-              fill(col3);
-              rect(-this.cw/threadPos, 0, this.cw / this.ts, this.ch);
-              stroke(col4);
-              fill(col4);
-              rect(this.cw/threadPos, 0, this.cw / this.ts, this.ch);
-              // Weft Threads
-              stroke(col1);
-              fill(col1);
-              rect(0, -this.ch/threadPos, this.cw, this.ch / this.ts);
-              stroke(col2);
-              fill(col2);
-              rect(0, this.ch/threadPos, this.cw, this.ch / this.ts);
-          }
-      }
-  }</code>
+        <pre>
+<code>makeWeave(_type, _num) {
+    let indexNum = this.i + this.j;
+    let threadPos = this.ts * 2; 
+    let col1 = currentPalette[colorIndex[0]];
+    let col2 = currentPalette[colorIndex[1]];
+    let col3 = currentPalette[colorIndex[2]];
+    let col4 = currentPalette[colorIndex[3]];
+
+    if (weaveType == _type) {
+        // Draw warp over weft
+        if (indexNum % _num == 0) {
+            // Weft Threads
+            stroke(col1);
+            fill(col1);
+            rect(0, -this.ch/threadPos, this.cw, this.ch / this.ts);
+            stroke(col2);
+            fill(col2);
+            rect(0, this.ch/threadPos, this.cw, this.ch / this.ts);
+            // Warp Threads
+            stroke(col3)
+            fill(col3);
+            rect(-this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+            stroke(col4);
+            fill(col4);
+            rect(this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+        // Draw weft over warp
+        } else {
+            // Warp Threads
+            stroke(col3)
+            fill(col3);
+            rect(-this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+            stroke(col4);
+            fill(col4);
+            rect(this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+            // Weft Threads
+            stroke(col1);
+            fill(col1);
+            rect(0, -this.ch/threadPos, this.cw, this.ch / this.ts);
+            stroke(col2);
+            fill(col2);
+            rect(0, this.ch/threadPos, this.cw, this.ch / this.ts);
+        }
+    }
+}</code>
         </pre>
 
         <p>
