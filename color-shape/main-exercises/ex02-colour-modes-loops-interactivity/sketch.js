@@ -19,7 +19,6 @@ function draw() {
 
 function keyPressed() {
   if (key == 's' || key == 'S') {
-    // console.log('it works');
     saveCanvas(gd.timestamp(), 'png'); // save canvas as an image
   }
 }
