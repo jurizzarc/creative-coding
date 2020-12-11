@@ -125,7 +125,7 @@ article a:hover {
 article h2 {
     font-size: var(--step-5);
     line-height: var(--step-5);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     letter-spacing: -1px;
 }
 
@@ -180,6 +180,12 @@ article p {
 
 article p:not(:first-of-type) {
     margin-top: 1.5rem;
+}
+
+article code {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-weight: 600;
 }
 
 pre {

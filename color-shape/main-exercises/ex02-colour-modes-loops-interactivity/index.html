@@ -1,26 +1,66 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <script src="../../libraries/p5/p5.min.js" type="text/javascript"></script>
+<html lang="en">
 
-    <script src="../../libraries/p5/p5.dom.min.js" type="text/javascript"></script>
-    <script src="../../libraries/generative-design-library/generative-design-library.js" type="text/javascript"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loops and Interactivity</title>
+  <!-- CSS Reset -->
+  <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Mulish:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/styles.css" type="text/css">
+</head>
 
-    <script src="sketch.js" type="text/javascript"></script>
+<body>
+  <main>
+    <article>
+      <header>
+        <h2>Loops and Interactivity</h2>
+        <h6>Exercise 02 &mdash; 29 Sep 2020</h6>
+      </header>
 
-    <!-- <link href="../../styles/main.css" rel="stylesheet" type="text/css"> -->
+      <section>
+        <a class="button" href="sketch.html">View Sketch</a>
+        <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/color-shape/main-exercises/ex02-colour-modes-loops-interactivity">Source Code</a>
+      </section>
 
-    <!-- help tooltip start -->
-    <script src="../../libraries/jquery/jquery.js" type="text/javascript"></script>
-    <script type="text/javascript" src="../../libraries/tooltipster/tooltipster.bundle.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../libraries/tooltipster/tooltipster.bundle.css" />
-    <link rel="stylesheet" type="text/css" href="../../libraries/tooltipster/tooltipster-sideTip-noir.min.css" />
-    <script src="../../libraries/help-tooltip.js" type="text/javascript"></script>
-    <!-- help tooltip end -->
-  </head>
-  <body>
-    <!-- <span id="help" data-tooltip-content="#help-content">?</span> -->
-  </body>
+      <p>
+        The sketch created in <a href="../ex01-colour-modes-loops/index.html">Exercise 01</a> was expanded to make it interactive.
+        The variables <code>mouseX</code>, <code>mouseY</code>, and <code>key</code> and the function <code>keyPressed()</code>, all
+        of which are included in the p5.js library, were used in this exercise to add some basic interactivity.
+      </p>
+
+      <h3>Mouse Interactivity</h3>
+      <p>
+        The mouse position can be used in a variety of ways to control the properties of elements on the canvas. To get the mouse 
+        position, the <code>mouseX</code> and <code>mouseY</code> variables are used. These store the x and y coordinates of the cursor 
+        relative to the origin (0, 0) of the canvas. 
+      </p>
+      <p>
+        For instance, the size of a shape can be controlled by the position of the mouse on the canvas.
+        In the code snippet below, the x and y coordinates of the mouse control the size of the tiles on the grid.
+      </p>
+      <pre><code>
+function draw() {
+  let stepX = mouseX + 1;
+  let stepY = mouseY + 1;
+
+  for (let gridX = 0; gridX < width; gridX += stepX) {
+    for (let gridY = 0; gridY < height;  gridY += stepY) {
+      fill(gridX, height - gridY, 100);
+      rect(gridX, gridY, stepX, stepY);
+    }
+  }
+}        
+      </code></pre>
+
+      <h3>Keyboard Interactivity</h3>
+      <p>
+        
+      </p>
+    </article>
+  </main>
+</body>
+
 </html>
