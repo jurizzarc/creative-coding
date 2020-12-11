@@ -57,8 +57,19 @@ function draw() {
 
       <h3>Keyboard Interactivity</h3>
       <p>
-        
+        Keyboard inputs can also be used to apply interactivity to graphics created with p5. 
+        In the code below, the <code>keyPressed()</code> function runs when a specific key is pressed. The key that was pressed by
+        the user is stored in the <code>key</code> variable. If the user presses <em>S</em>, whether it's in lowercase or uppercase,
+        the current canvas is saved as an image in PNG file format.
       </p>
+
+      <pre><code>
+function keyPressed() {
+  if (key == 's' || key == 'S') {
+    saveCanvas(gd.timestamp(), 'png');
+  }
+}
+      </code></pre>
     </article>
   </main>
 </body>
