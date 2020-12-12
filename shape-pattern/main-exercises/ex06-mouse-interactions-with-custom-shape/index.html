@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Colour Modes and Loops</title>
+  <title>Exercise 06 – Custom Shapes and Interactivity</title>
   <!-- CSS Reset -->
   <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,7 +16,7 @@
   <main>
     <article>
       <header>
-        <h2>Custom Shapes and Transformations</h2>
+        <h2>Custom Shapes and Interactivity</h2>
         <h6>Exercise 06 &mdash; 14 Oct 2020</h6>
       </header>
 
@@ -24,6 +24,66 @@
         <a class="button" href="sketch.html">View Sketch</a>
         <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/shape-pattern/main-exercises/ex06-mouse-interactions-with-custom-shape">Source Code</a>
       </section>
+
+      <p>
+        We looked at how to implement mouse interactivity and transformations in sketches before starting pattern creation with p5.js.
+      </p>
+
+      <h3>The custom shape</h3>
+      <p>
+        Similar to the HSB colour wheel created in the <a href="../../../color-shape/main-exercises/ex03-custom-shapes/index.html">previous</a>
+        <a href="../../../color-shape/main-exercises/ex04-transformations/index.html">exercises</a>, the spiky custom shape is created 
+        with the <code>beginShape()</code>, <code>vertex()</code>, and <code>endShape()</code> functions. The <code>TRIANGLE_FAN</code>
+        constant and a <code>for</code> loop draws the spikes of the shape. The code for this custom shape is almost similar to the code for 
+        the colour wheel except the segment has no fill colour and has a border around it instead. The starting vertex coordinates is not followed
+        by a series of vertices but by lines drawn using the <code>line()</code> function. Transformations are also applied to this sketch. 
+        The coordinate system is moved to the centre of the canvas.
+      </p>
+      <pre><code>
+function setup() {
+  createCanvas(500, 500);
+  background(224);
+
+  centerX = width/2;
+  centerY = height/2;
+}
+
+function draw() {
+  background(224);
+  push();
+  translate(centerX, centerY);
+  beginShape(TRIANGLE_FAN);
+  vertex(0, 0);
+  for (let i = 0; i <= TWO_PI; i += stepAngle) {
+    let vx = (radius * cos(i));
+    let vy = (radius * sin(i));
+    strokeWeight(2);
+    stroke(0);
+    line(0, 0, vx, vy);
+  }
+  endShape();
+  pop();
+}
+      </code></pre>
+
+      <h3>Mouse Interactivity</h3>
+      <p>
+        In this exercise, the current mouse position controls the radius and the number of spikes
+        of the custom shape. The <code>mouseX</code> coordinate is scaled from a value in the range of 
+        0 to the right edge of the window (<code>width</code>) to a range between -200 and 200. The resulting
+        value determines the radius of the custom shape. The <code>mouseY</code> coordinate is scaled from a range
+        between 0 and the bottom edge of the window (<code>height</code>) to a value in the range of 12 and 90. The resulting
+        value is the number of spikes (<code>numOfSegments</code>). The angle at which a spike is drawn is the quotient of <code>TWO_PI</code> divided by 
+        <code>numOfSegments</code>. <code>TWP_PI</code> is used in this exercise as the <code>angleMode()</code>
+        is set to default, which is <code>RADIIANS</code>. The following lines of code are included in the
+        <code>draw()</code> function.
+      </p>
+
+      <pre><code>
+radius = map(mouseX, 0, width, -200, 200);
+numOfSegments = map(mouseY, 0, height, 12, 90);
+stepAngle = TWO_PI/numOfSegments;
+      </code></pre>
     </article>
   </main>
 </body>

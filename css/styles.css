@@ -15,7 +15,7 @@
 
     --bg-color: #1f1f1f;
     --text-color: #fff;
-    --card-link-color: #000;
+    --card-link-color: #1f1f1f;
     --other-links-color: #fff;
     --link-hover-color: #a1a1a1;
     --pre-bg-color: #3b3b3b;
@@ -31,11 +31,11 @@ body {
 
 a {
     text-decoration: none;
-    color: #000;
+    color: var(--card-link-color);
 }
 
 a:hover {
-    color: #6c6c6c;
+    color: var(--link-hover-color);
 }
 
 span.title {
@@ -129,12 +129,12 @@ article a {
 }
 
 article a:hover {
-    color: var(--pre-bg-color);
+    color: var(--link-hover-color);
 }
 
 article h2 {
     font-size: var(--step-5);
-    line-height: var(--step-5);
+    line-height: 1.2;
     margin-bottom: 0.75rem;
     letter-spacing: -1px;
 }
