@@ -1,9 +1,7 @@
 function setup() {
   createCanvas(500, 500);
   background(224);
-  angleMode(DEGREES);
   colorMode(HSB, 360, 100, 100);
-  noStroke();
 }
 
 function draw() {
