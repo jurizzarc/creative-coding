@@ -1,5 +1,3 @@
-let numOfSegments, stepAngle, centerX, centerY, radius;
-
 function setup() {
   createCanvas(500, 500);
   background(224);
