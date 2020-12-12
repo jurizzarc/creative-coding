@@ -38,10 +38,12 @@ a:hover {
     color: #6c6c6c;
 }
 
-h1.title {
+span.title {
     margin-top: 0;
     margin-bottom: 6rem;
     text-align: center;
+    font-size: var(--step-3);
+    display: block;
 }
 
 main {
