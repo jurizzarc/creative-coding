@@ -29,6 +29,56 @@
         The sketch created in the <a href="../ex03-custom-shapes/index.html">previous exercise</a> was modified
         to change how the colour wheel gets drawn on the canvas by using transformations. 
       </p>
+
+      <h3>Mapping</h3>
+      <p>
+        In this exercise, the values required for the colour wheel: <code>numOfSegments</code>,
+        <code>stepAngle</code>, <code>centerX</code>, <code>centerY</code>, and <code>radius</code>
+        are defined in the <code>draw()</code> function. This is because the mouse position controls 
+        the number of segments of the colour wheel. To do this, the <code>mouseX</code> coordinate is taken and scaled
+        to a new number by using the <code>map()</code> function. In the code below, <code>mouseX</code>
+        is scaled from a value in the range of 0 to the right edge of the window (<code>width</code>) to
+        a range between 20 and 60.
+      </p>
+
+      <pre><code>
+function draw() {
+  numOfSegments = map(mouseX, 0, width, 20, 60); 
+  stepAngle = 360/numOfSegments;
+  centerX = width/2;
+  centerY = height/2;
+  radius = 100;
+}
+      </code></pre>
+
+      <h3>Translations</h3>
+      <p>
+        The coordinate system which starts at point (0, 0) can be moved by using the 
+        <code>translate()</code> function. If a sketch has multiple translations,
+        the <code>push()</code> and <code>pop()</code> functions are used to save
+        the drawing state and transformation settings and then restore these settings. 
+        The following code is included in the <code>draw()</code> function.
+      </p>
+
+      <pre><code>
+push();
+translate(centerX, centerY);
+  beginShape(TRIANGLE_FAN);
+    vertex(0, 0);
+    for (let i = 0; i <= 360; i += stepAngle) {
+      let vx = radius * cos(i);
+      let vy = radius * sin(i);
+      fill(i, 100, 100);
+      vertex(vx, vy);
+    }
+  endShape();
+pop();
+      </code></pre>
+
+      <p>
+        Instead of adding the centre points to the adjacent and opposite (<code>vx</code> and <code>vy</code>),
+        the coordinate system is moved from (0, 0) to the centre of the canvas (<code>centerX</code> and <code>centerY</code>).
+      </p>
     </article>
   </main>
 </body>
