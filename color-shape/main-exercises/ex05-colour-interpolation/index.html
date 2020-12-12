@@ -31,9 +31,51 @@
 
       <h3>Storing colours into variables</h3>
       <p>
-        Colour interpolation works by finding a third colour between two colours.
-        The <code>color()</code> function can be used to define these two colours.
+        Colour interpolation works by finding a third colour between two colours. The <code>color()</code> function 
+        can be used to define these two colours. Depending on the colour mode set with the <code>colorMode()</code> function,
+        the parameters passed to the <code>color()</code> function are interpreted as RGB or HSB values. For this exercise,
+        the colour mode is set to <code>HSB</code> in <code>setup()</code>.
       </p>
+
+      <p>
+        To show how colour interpolation works, I first drew 100 squares on the canvas. 10 on each column and 10 on each row.
+      </p>
+
+      <pre><code>
+function draw() {
+  for (let x = 0; x < 10; x++) {
+    for (let y = 0; y < 10; y++) {
+      noStroke();
+      rect(x * 50 + 10, y * 50 + 10, 20, 20);
+    }
+  }
+}
+      </code></pre>
+
+      <p>
+        The two colours which would be used for colour interpolation are created and stored into variables <code>startColor</code> and
+        <code>endColor</code>. The first colour has a hue of 360 degrees, while the second colour has a hue of 180 degrees. The following
+        lines of code were added before <code>noStroke();</code>.
+      </p>
+
+      <pre><code>
+let startColor = color(360, 100, 100);
+let endColor = color(180, 100, 100);
+      </code></pre>
+
+      <h3>Finding a third colour between two colours</h3>
+      <p>
+        The <code>lerpColor()</code> function finds a third colour between two colours by interpolating them. The amount of
+        interpolation between these colours are based on a number between 0 and 1. This function accepts three parameters:
+        the first colour or in this exercise, the colour stored in the <code>starColor</code> variable, the second colour (<code>endColor</code>),
+        and the interpolation amount. As shown in the code below, the interpolation amount is set to the <code>x</code> value divided by
+        10, which would return a float value. If the value is equal to 0.1, then it is near the first colour. 0.9 is near the 
+        second colour and 0.5 is between those colours.
+      </p>
+      <pre><code>
+let c = lerpColor(startColor, endColor, x/10);
+fill(c);
+      </code></pre>
     </article>
   </main>
 </body>
