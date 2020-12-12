@@ -3,15 +3,15 @@
 :root {
     --auto-grid-min-size: 16rem;
 
-    --step--2: clamp(0.6075rem, 0.5324rem + 0.3756vw, 0.8rem);
-    --step--1: clamp(0.7294rem, 0.6238rem + 0.528vw, 1rem);
-    --step-0: clamp(0.875rem, 0.7287rem + 0.7317vw, 1.25rem);
-    --step-1: clamp(1.05rem, 0.85rem + 1vw, 1.5625rem);
-    --step-2: clamp(1.26rem, 0.9895rem + 1.3524vw, 1.9531rem);
-    --step-3: clamp(1.5119rem, 1.1492rem + 1.8134vw, 2.4413rem);
-    --step-4: clamp(1.8144rem, 1.3314rem + 2.4146vw, 3.0519rem);
-    --step-5: clamp(2.1775rem, 1.5385rem + 3.1951vw, 3.815rem);
-    --step-6: clamp(2.6125rem, 1.7713rem + 4.2061vw, 4.7681rem);
+    --step--2: clamp(0.6513rem, 0.6244rem + 0.1341vw, 0.72rem);
+    --step--1: clamp(0.7813rem, 0.7349rem + 0.2317vw, 0.9rem);
+    --step-0: clamp(0.9375rem, 0.8643rem + 0.3659vw, 1.125rem);
+    --step-1: clamp(1.125rem, 1.0152rem + 0.5488vw, 1.4063rem);
+    --step-2: clamp(1.35rem, 1.1907rem + 0.7963vw, 1.7581rem);
+    --step-3: clamp(1.62rem, 1.3946rem + 1.1268vw, 2.1975rem);
+    --step-4: clamp(1.9438rem, 1.6303rem + 1.5671vw, 2.7469rem);
+    --step-5: clamp(2.3325rem, 1.903rem + 2.1476vw, 3.4331rem);
+    --step-6: clamp(2.7994rem, 2.2172rem + 2.911vw, 4.2913rem);
 
     --bg-color: #1f1f1f;
     --text-color: #fff;
@@ -19,6 +19,7 @@
     --other-links-color: #fff;
     --link-hover-color: #a1a1a1;
     --pre-bg-color: #3b3b3b;
+    --border-color: #eee;
 }
 
 body {
@@ -39,11 +40,8 @@ a:hover {
 
 h1.title {
     margin-top: 0;
-    margin-bottom: 5rem;
-    color: #fff;
-    display: inline-block;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #fff;
+    margin-bottom: 6rem;
+    text-align: center;
 }
 
 main {
@@ -52,11 +50,11 @@ main {
     padding: 6rem 1rem;
 }
 
-.auto-grid > * {
+.auto-grid>* {
     max-width: 400px
 }
 
-.auto-grid > * + * {
+.auto-grid>*+* {
     margin-top: 3rem;
 }
 
@@ -67,13 +65,23 @@ main {
         grid-gap: 3rem;
     }
 
-    .auto-grid > * {
+    .auto-grid>* {
         max-width: unset;
     }
 
-    .auto-grid > * + * {
+    .auto-grid>*+* {
         margin-top: unset;
     }
+}
+
+footer {
+    margin-top: 6rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+footer p {
+    font-size: var(--step-0);
 }
 
 .grid-item {
@@ -92,35 +100,34 @@ main {
 }
 
 .grid-item-body {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 1.125rem;
 }
 
-.grid-item-body h4 {
-    text-transform: lowercase;
+.grid-item-body strong {
     font-weight: 600;
     margin-top: 0;
-    margin-bottom: 0.125rem;
+    font-size: var(--step--1);
+    display: block;
 }
 
-.grid-item-body p {
-    margin: 0;
-    text-transform: lowercase;
-    font-size: 0.938rem;
+.grid-item-body small {
+    font-size: var(--step--1);
     color: #1f1f1f;
+    display: blocl;
 }
 
 article {
-    max-width: 40rem;
+    max-width: 38rem;
     margin: 0 auto;
 }
 
 article a {
-    color: #fff;
+    color: var(--text-color);
     text-decoration: underline;
 }
 
 article a:hover {
-    color: #a1a1a1;
+    color: var(--pre-bg-color);
 }
 
 article h2 {
@@ -143,14 +150,14 @@ article h6 {
 }
 
 article header {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 1.5rem;
 }
 
 article section.buttons {
     padding: 1.5rem 0 1.5rem 0;
     margin-bottom: 2.625rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
     grid-gap: 1rem;
