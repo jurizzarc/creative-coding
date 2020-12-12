@@ -15,13 +15,98 @@
 <body>
   <main>
     <article>
-      <h2>Custom Shapes</h2>
-      <h6>Exercise 03 &mdash; 30 Sep 2020</h6>
-
+      <header>
+        <h2>Custom Shapes</h2>
+        <h6>Exercise 03 &mdash; 30 Sep 2020</h6>
+      </header>
       <section class="buttons">
         <a class="button" href="sketch.html">View Sketch</a>
         <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/color-shape/main-exercises/ex03-custom-shapes">Source Code</a>
       </section>
+
+      <p>
+        The p5.js library includes the functions <code>beginShape()</code>, <code>endShape()</code>, and <code>vertex()</code> which allow us to create more complex shapes. 
+        In this exercise, these functions were used to draw the HSB colour wheel.
+      </p>
+
+      <h3>Setting up the canvas</h3>
+      <p>
+        By default, the mode in which the angles would be interpreted and calculated is set to <code>RADIANS</code>. In this exercise, the
+        <code>angleMode()</code> is set to <code>DEGREES</code>. The <code>colorMode</code>, similar to 
+        the previous exercises, is set to <code>HSB</code>. This is because we're creating a colour wheel.
+        Each major colour on the HSB colour wheel are at 30 degree intervals. Other initial properties
+        that are defined for this exercise are the width and height of the canvas and the background colour.
+        The outline of the shapes are also disabled by the <code>noStroke()</code> function.
+      </p>
+      <pre><code>
+function setup() {
+  createCanvas(500, 500);
+  background(224);
+  angleMode(DEGREES);
+  colorMode(HSB, 360, 100, 100);
+  noStroke();
+}
+      </code></pre>
+      <p>
+        The following are values needed to create the colour wheel. These values are
+        defined in the <code>setup()</code> function.
+      </p>
+
+      <pre><code>
+centerX = width/2;
+centerY = height/2;
+numOfSegments = 12;
+stepAngle = 360/numOfSegments;
+radius = 100;
+      </code></pre>
+      <p>
+        The <code>centerX</code> and <code>centerY</code> values will be used to place the centre 
+        point of the colour wheel on the centre of the canvas. The <code>numOfSegments</code> refers
+        to the number of points of the colour wheel. <code>stepAngle</code> determines the angle
+        at which a point is drawn within the colour wheel and the <code>radius</code> is the
+        distance between the centre and the boundary of the colour wheel.
+      </p>
+
+      <h3>Drawing the colour wheel</h3>
+      <p>
+        To draw the HSB colour wheel, I used the <code>beginShape()</code>, <code>endShape()</code>,
+        and <code>vertex()</code> functions. <code>beginShape()</code> starts recording the vertices
+        that define the form of a complex shape. This function accepts a parameter which affects the kind
+        of shape that would be drawn. In this exercise, I passed the <code>TRIANGLE_FAN</code>
+        constant to the <code>beginShape()</code> function, which should draw the segments
+        of the colour wheel. The <code>endShape()</code> function is called to end the recording and to
+        complete the complex shape. The <code>vertex()</code> function has to be used within <code>beginShape()</code>
+        and <code>endShape</code>. The vertex coordinates for the custom shape are defined by using this function.
+      </p>
+
+      <pre><code>
+function draw() {
+  beginShape(TRIANGLE_FAN);
+    vertex(centerX, centerY);
+    for (let i = 0; i <= 360; i += stepAngle) {
+      let vx = (radius * cos(i)) + centerX;
+      let vy = (radius * sin(i)) + centerY;
+      fill(i, 100, 100);
+      vertex(vx, vy);
+    }
+  endShape();
+}
+      </code></pre>
+
+      <p>
+        In the above code, the custom shape starts at the centre of the canvas. This point would
+        be the centre of the colour wheel. It is followed by a <code>for</code> loop. This loop initialises i (which represents an angle) to 0, checks that i 
+        is less than 360 (360 degrees is a full circle), draws a segment of the colour wheel, and increments i by
+        30 (This is the quotient of 360/12 and as previously mentioned, the major colours are at 30 degree intervals on the HSB colour wheel). 
+        Within the <code>for</code> loop, the rest of the vertices are drawn. A segment of the colour wheel looks like
+        a triangle and we have its hypotenuse already, the value assigned to the <code>radius</code> variable. To find the adjacent
+        side, the radius is multiplied by the cosine of i and the product is added to 
+        a centre point, the <code>centreX</code> value. If the product is not added to the centre point,
+        the segment would be placed incorrectly on the canvas. The adjacent value is stored in the <code>vx</code>
+        variable. The opposite side is calculated in a similar way but in reverse. The opposite value is stored in 
+        the <code>vy</code> variable. The adjacent and opposite values are vertices and are passed to the 
+        <code>vertex()</code> function. The hue colour of each segment depends on the angle.
+      </p>
     </article>
   </main>
 </body>
