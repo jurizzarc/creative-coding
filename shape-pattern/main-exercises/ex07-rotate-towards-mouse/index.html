@@ -24,6 +24,167 @@
         <a class="button" href="sketch.html">View Sketch</a>
         <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/shape-pattern/main-exercises/ex07-rotate-towards-mouse">Source Code</a>
       </section>
+
+      <p>
+        In this sketch, we applied what we've learned in the previous exercises such as transformations and colour to create a pattern.
+        The pattern consists of circles that rotate towards the current mouse position.
+      </p>
+
+      <h3>Setting up the canvas</h3>
+      <p>
+        The following are global variables needed to define the initial properties of the canvas and the circles that
+        will be drawn later.
+      </p>
+      <pre><code>
+let shapes = [];
+let canvasSize = 500;
+let numOfShapes = 20;
+let shapeSize = canvasSize/numOfShapes;
+let col, d;
+      </code></pre>
+      <p>
+        The empty <code>shapes</code> array is where the circles created from the <code>Shape</code> class will be added.
+        <code>canvasSize</code> refers to the width and height of the canvas and <code>numOfShapes</code> is the number
+        of circles drawn in each row and column on the canvas. <code>shapeSize</code> is the width and height of the circle.
+        <code>col</code> is the colour of each circle and <code>d</code> stands for distance. These variables will be used in 
+        the <code>Shape</code> class.
+      </p>
+      <pre><code>
+function setup() {
+  createCanvas(canvasSize, canvasSize);
+  ellipseMode(CENTER);
+  colorMode(RGB, numOfShapes, numOfShapes, numOfShapes);
+}
+      </code></pre>
+      <p>
+        As shown in the code above, the color mode is set to RGB and the range for the red, green, and blue are
+        all set to the number of shapes on the canvas. This is for generating an interesting colour palette.
+      </p>
+
+      <h3>The Shape class</h3>
+      <p>
+        The circle objects that are drawn on the canvas are created from a class called <code>Shape</code>. A circle object has the following
+        properties.
+      </p>
+      <pre><code>
+class Shape {
+  constructor(_i, _j) {
+    this.i = _i;
+    this.j = _j;
+    this.s = shapeSize;
+    this.x = this.i * this.s + this.s/2; 
+    this.y = this.j * this.s + this.s/2; 
+    this.angle = 0;
+  }
+}
+      </code></pre>
+      <p>
+        <code>this.i</code> and <code>this.j</code> are index numbers. <code>this.s</code> is initialised to 
+        the value assigned to the global variable <code>shapeSize</code>. <code>this.x</code> and <code>this.y</code>
+        are offset properties that make sure the circles will be drawn within the canvas. <code>this.angle</code>
+        is initialised to 0 but this value changes when the circles rotate towards the mouse.
+      </p>
+
+      <p>
+        Before drawing the circles on the canvas, I first populated the <code>shapes</code> array
+        in <code>setup()</code>.
+      </p>
+      <pre><code>
+for (let i = 0; i < numOfShapes; i++) {
+  for (let j = 0; j < numOfShapes; j++) {
+    shapes.push(new Shape(i, j));
+  }
+}
+      </code></pre>
+
+      <h3>Drawing the circles on the canvas</h3>
+      <p>
+        I have a method called <code>render()</code> in the <code>Shape</code> class which draws a circle object on the canvas when called. 
+        Each circle has its own origin point which are the values assigned to the properties <code>this.x</code> and <code>this.y</code>. 
+        The colour of the outline of each circle depends on its position on the canvas. 
+      </p>
+      <pre><code>
+render() {
+  push();
+  translate(this.x, this.y);
+
+  col = color(this.i, 0, numOfShapes - this.j);
+  
+  noFill();
+  stroke(col);
+  ellipse(0, 0, this.s, this.s);
+
+  pop();
+}
+      </code></pre>
+      <p>
+        Next, the <code>render()</code> method is called on each circle object in the <code>draw()</code> function. The result
+        is 400 circles drawn on the canvas, each has no fill colour and has a different outline or stroke colour.
+      </p>
+      <pre><code>
+function draw() {
+  background(0);
+  shapes.forEach(shape => {
+    shape.render();
+  });
+}
+      </code></pre>
+
+      <h3>Rotating each circle towards mouse position</h3>
+      <p>
+        The method <code>updateAngle()</code> changes the inital angle of a circle object. It has the parameters
+        <code>_mx</code> and <code>_my</code>. These parameters refer to the <code>mouseX</code> and <code>mouseY</code> variables that return
+        the current mouse position on the screen. <code>atan2()</code> calculates the angle in radians from each circle to the mouse position.
+        The <code>updateAngle()</code> method is added just before the <code>render()</code> method in the <code>Shape</code> class.
+      </p>
+      <pre><code>
+updateAngle(_mx, _my) {
+  let dx = _mx - this.x;
+  let dy = _my - this.y;
+  this.angle = atan2(dy, dx);
+}
+      </code></pre>
+      <p>
+        The code below rotates a circle by the current angle value. It is included in the <code>render()</code> method after
+        the translation.
+      </p>
+      
+      <pre><code>
+rotate(this.angle);
+      </code></pre>
+      <p>
+        Then the <code>updateAngle()</code> method is called on each circle object in the <code>draw()</code> function.
+      </p>
+      <pre><code>
+shapes.forEach(shape => {
+  shape.updateAngle(mouseX, mouseY);
+  shape.render();
+});
+      </code></pre>
+      <p>
+        Smaller circles are drawn on the canvas to make the rotation more obvious. The following lines of code are added
+        in the <code>render()</code> method before <code>pop()</code>.
+      </p>
+      <pre><code>
+fill(255);
+noStroke();
+ellipse(this.s/4, 0, this.s/2, this.s/2);
+      </code></pre>
+
+      <h3>Changing the size of each circle</h3>
+      <p>
+        To better the mouse interactivity of the sketch, the size of each circle also changes according to the current
+        mouse position.
+      </p>
+      <pre><code>
+d = dist(mouseX, mouseY, this.x, this.y);
+this.s = map(d, 0, width, 10, shapeSize);
+      </code></pre>
+      <p>
+        The <code>dist()</code> function calculates the distance between the mouse position and the circle position. The result
+        is scaled from a range between 0 and the <code>width</code> to a range between 10 and the value assigned to the <code>shapeSize</code>
+        variable.
+      </p>
     </article>
   </main>
 </body>
