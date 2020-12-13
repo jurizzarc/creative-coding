@@ -24,6 +24,41 @@
         <a class="button" href="sketch.html">View Sketch</a>
         <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/color-shape/main-exercises/ex03-custom-shapes">Source Code</a>
       </section>
+
+      <p>
+        The circle pattern created in the <a href="../ex07-rotate-towards-mouse/index.html">previous exercise</a> was used as a basis
+        for developing the line pattern in this exercise. Randomness and random seed were applied to generate the line pattern.
+      </p>
+
+      <h3>The Shape class</h3>
+      <p>
+        Similar to the circle objects, the lines drawn on the canvas are created from the <code>Shape</code> class.
+        Each line object has the following properties.
+      </p>
+      <pre><code>
+class Shape {
+  constructor(_i, _j) {
+    this.i = _i;
+    this.j = _j;
+    this.s = shapeSize;
+    this.x = this.i * this.s; 
+    this.y = this.j * this.s; 
+    this.sw = 1;
+  }
+}
+      </code></pre>
+      <p>
+        <code>this.i</code> and <code>this.j</code> are index numbers. <code>this.s</code> is initialised to 
+        the value assigned to the global variable <code>shapeSize</code>. <code>this.x</code> and <code>this.y</code>
+        are offset properties that make sure the lines will be drawn within the canvas. <code>this.sw</code>
+        refers to the stroke weight of the line and it is initialised to 1. This value changes depending on the current mouse position. 
+      </p>
+      
+      <h3>Generating random numbers</h3>
+      <p>
+        The <code>random()</code> function can be used to add variety to patterns. This function returns a random value of float type. It takes 0, 1, or
+        two arguments. If no parameter is passed to the function, it returns a value between 0 and 1. 
+      </p>
     </article>
   </main>
 </body>
