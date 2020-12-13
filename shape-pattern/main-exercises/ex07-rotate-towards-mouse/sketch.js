@@ -1,34 +1,34 @@
-let squares = [];
+let shapes = [];
 let canvasSize = 500;
-let numOfSquares = 20;
-let squareSize = canvasSize/numOfSquares;
+let numOfShapes = 20;
+let shapeSize = canvasSize/numOfShapes;
 let col, d;
 
 function setup() {
   createCanvas(canvasSize, canvasSize);
   ellipseMode(CENTER);
-  colorMode(RGB, numOfSquares, numOfSquares, numOfSquares);
+  colorMode(RGB, numOfShapes, numOfShapes, numOfShapes);
 
-  for (let i = 0; i < numOfSquares; i++) {
-    for (let j = 0; j < numOfSquares; j++) {
-      squares.push(new Square(i, j));
+  for (let i = 0; i < numOfShapes; i++) {
+    for (let j = 0; j < numOfShapes; j++) {
+      shapes.push(new Shape(i, j));
     }
   }
 }
 
 function draw() {
   background(0);
-  squares.forEach(square => {
-    square.updateAngle(mouseX, mouseY);
-    square.render();
+  shapes.forEach(shape => {
+    shape.updateAngle(mouseX, mouseY);
+    shape.render();
   });
 }
 
-class Square {
+class Shape {
   constructor(_i, _j) {
     this.i = _i;
     this.j = _j;
-    this.s = squareSize;
+    this.s = shapeSize;
     this.x = this.i * this.s + this.s/2; //transX
     this.y = this.j * this.s + this.s/2; //transY
     this.angle = 0;
@@ -45,9 +45,9 @@ class Square {
     translate(this.x, this.y);
     rotate(this.angle);
 
-    col = color(this.i, 0, numOfSquares - this.j);
+    col = color(this.i, 0, numOfShapes - this.j);
     d = dist(mouseX, mouseY, this.x, this.y);
-    this.s = map(d, 0, width, 10, squareSize);
+    this.s = map(d, 0, width, 10, shapeSize);
     
     noFill();
     stroke(col);
