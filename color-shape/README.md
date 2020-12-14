@@ -1,11 +1,18 @@
-### Creative Coding Exercises
+### color-shape exercises
 ---
-Hi Class,
+This folder contains the source code for Exercises 01 to 05.
 
-Here you will find the template repository required for your creative coding module
+1. **Colour Modes and Loops**
+Introduction to p5.js, how to draw simple shapes, changing the colour mode from RGB to HSB, using a nested for loop to create a multi-coloured tile grid
 
-The clone link you need for this is the following
+2. **Loops and Interactivity**
+Expanding the sketch created in Exercise 01 by implementing mouse and keyboard interactivity
 
-```
-https://github.com/montaynej/Creative-Coding-Template.git
-```
+3. **Custom Shapes**
+Creating the HSB colour wheel using the *beginShape()*, *vertex()*, and *endShape()* functions
+
+4. **Transformations**
+Using transformations to change how graphics get drawn on the canvas
+
+5. **Colour Interpolation**
+Finding the third colour between two colours by using the *lerpColor()* function
