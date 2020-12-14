@@ -1,5 +1,4 @@
 ### color-shape exercises
----
 This folder contains the source code for Exercises 01 to 05.
 
 1. **Colour Modes and Loops**
