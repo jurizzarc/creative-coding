@@ -44,7 +44,6 @@ class Shape {
     stroke(col);
     randomNum = round(random(0, 1));
     if (randomNum == 0) {
-      // line(0, this.s, this.s, 0);
       fill(col);
       beginShape(TRIANGLES);
       vertex(0, 0);

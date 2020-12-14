@@ -1,26 +1,86 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <script src="../../libraries/p5/p5.min.js" type="text/javascript"></script>
+<html lang="en">
 
-    <script src="../../libraries/p5/p5.dom.min.js" type="text/javascript"></script>
-    <script src="../../libraries/generative-design-library/generative-design-library.js" type="text/javascript"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experimenting with line and shape</title>
+  <!-- CSS Reset -->
+  <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Mulish:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/styles.css" type="text/css">
+</head>
 
-    <script src="sketch.js" type="text/javascript"></script>
+<body>
+  <main>
+    <article>
+      <header>
+        <h2>Experimenting with line and shape</h2>
+        <h6>Exercise 10 &mdash; 03 Nov 2020</h6>
+      </header>
+      <section class="buttons">
+        <a class="button" href="sketch.html">View Sketch</a>
+        <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/shape-pattern/main-exercises/ex10-experimenting-with-pattern-c">Source Code</a>
+      </section>
+      <p>
+        The triangle pattern created in the <a href="../ex09-experimenting-with-pattern-b/index.html">previous exercise</a> was modified to generate a square pattern.
+      </p>
 
-    <!-- <link href="../../styles/main.css" rel="stylesheet" type="text/css"> -->
+      <h3>Using randomness</h3>
+      <p>
+        If the random value that is produced is equal to 0, two triangles forming a square will be drawn on the canvas. 
+        The second triangle has a darker colour because it has the alpha value of 175.
+        If the random value is equal to 1, the shape that will be drawn on the canvas is a "falling" diagonal line.
+      </p>
+      <pre><code>
+render() {
+  push();
+  translate(this.x, this.y);
 
-    <!-- help tooltip start -->
-    <script src="../../libraries/jquery/jquery.js" type="text/javascript"></script>
-    <script type="text/javascript" src="../../libraries/tooltipster/tooltipster.bundle.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../libraries/tooltipster/tooltipster.bundle.css" />
-    <link rel="stylesheet" type="text/css" href="../../libraries/tooltipster/tooltipster-sideTip-noir.min.css" />
-    <script src="../../libraries/help-tooltip.js" type="text/javascript"></script>
-    <!-- help tooltip end -->
-  </head>
-  <body>
-    <!-- <span id="help" data-tooltip-content="#help-content">?</span> -->
-  </body>
+  col = color(this.i, 0, numOfShapes - this.j);
+  col2 = color(this.i, 0, numOfShapes - this.j, 175);
+
+  strokeWeight(1);
+  stroke(col);
+  randomNum = round(random(0, 1));
+  if (randomNum == 0) {
+    fill(col);
+    beginShape(TRIANGLES);
+    vertex(0, 0);
+    vertex(0, this.s);
+    vertex(this.s, 0);
+    endShape();
+
+    fill(col2);
+    beginShape(TRIANGLES);
+    vertex(0, this.s);
+    vertex(this.s, 0);
+    vertex(this.s, this.s);
+    endShape();
+  } else {
+    line(0, 0, this.s, this.s);
+  }
+  
+  pop();
+}
+      </code></pre>
+      <p>
+        Similar to the previous exercise, <code>randomSeed()</code> is included in the 
+        <code>draw()</code> function so that the same sequence of random values will always be
+        produced by the <code>random()</code> function.
+      </p>
+      <pre><code>
+function draw() {
+  background(0);
+  randomSeed(23);
+  shapes.forEach(shape => {
+    shape.render();
+  });
+}       
+      </code></pre>
+    </article>
+  </main>
+</body>
+
 </html>
