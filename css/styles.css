@@ -34,8 +34,9 @@ a {
     color: var(--text-color);
 }
 
-a:hover, .grid-item-body a:hover {
+a:hover {
     color: var(--link-hover-color);
+    text-decoration: underline;
 }
 
 span.title {
