@@ -1,17 +1,17 @@
-let squares = [];
+let shapes = [];
 let canvasSize = 500;
-let numOfSquares = 20;
-let squareSize = canvasSize/numOfSquares;
-let start, end, val, col, col2, d, randomNum;
+let numOfShapes = 20;
+let shapeSize = canvasSize/numOfShapes;
+let col, col2, randomNum;
 
 function setup() {
   createCanvas(canvasSize, canvasSize);
-  colorMode(RGB, numOfSquares, numOfSquares, numOfSquares);
+  colorMode(RGB, numOfShapes, numOfShapes, numOfShapes);
   //noLoop();
 
-  for (let i = 0; i < numOfSquares; i++) {
-    for (let j = 0; j < numOfSquares; j++) {
-      squares.push(new Square(i, j));
+  for (let i = 0; i < numOfShapes; i++) {
+    for (let j = 0; j < numOfShapes; j++) {
+      shapes.push(new Shape(i, j));
     }
   }
 }
@@ -19,29 +19,28 @@ function setup() {
 function draw() {
   background(0);
   randomSeed(23);
-  squares.forEach(square => {
-    square.render();
+  shapes.forEach(shape => {
+    shape.render();
   });
 }
 
-class Square {
+class Shape {
   constructor(_i, _j) {
     this.i = _i;
     this.j = _j;
-    this.s = squareSize;
+    this.s = shapeSize;
     this.x = this.i * this.s; //transX
     this.y = this.j * this.s; //transY
-    this.sw = 1;
   }
 
   render() {
     push();
     translate(this.x, this.y);
 
-    col = color(this.i, 0, numOfSquares - this.j);
-    col2 = color(this.i, 0, numOfSquares - this.j, 175);
+    col = color(this.i, 0, numOfShapes - this.j);
+    col2 = color(this.i, 0, numOfShapes - this.j, 175);
 
-    strokeWeight(this.sw);
+    strokeWeight(1);
     stroke(col);
     randomNum = round(random(0, 1));
     if (randomNum == 0) {
