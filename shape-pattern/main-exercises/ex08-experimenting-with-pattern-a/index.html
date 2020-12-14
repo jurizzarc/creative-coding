@@ -33,7 +33,7 @@
       <h3>The Shape class</h3>
       <p>
         Similar to the circle objects, the lines drawn on the canvas are created from the <code>Shape</code> class.
-        Each line object has the following properties.
+        Each line has the following properties.
       </p>
       <pre><code>
 class Shape {
@@ -57,7 +57,62 @@ class Shape {
       <h3>Generating random numbers</h3>
       <p>
         The <code>random()</code> function can be used to add variety to patterns. This function returns a random value of float type. It takes 0, 1, or
-        two arguments. If no parameter is passed to the function, it returns a value between 0 and 1. 
+        two arguments. In this exercise, the numbers 0 and 1 are passed into <code>random()</code> and whatever value is returned by the function,
+        the <code>round()</code> function rounds the random value to the nearest integer.
+      </p>
+      <p>
+        A "rising" diagonal line is generated if the random value, which is stored in the <code>randomNum</code> variable, is equal to 0. If it is 
+        equal to 1, a "falling" diagonal line is generated. The diagonal line goes from one corner of
+        the shape across to the opposite corner.
+      </p>
+      <pre><code>
+render() {
+  push();
+  translate(this.x, this.y);
+
+  col = color(this.i, 0, numOfShapes - this.j);
+  strokeWeight(this.sw);
+  stroke(col);
+  randomNum = round(random(0, 1));
+  if (randomNum == 0) {
+    line(0, this.s, this.s, 0);
+  } else {
+    line(0, 0, this.s, this.s);
+  }
+  
+  pop();
+}
+      </code></pre>
+      
+      <h3>Using randomSeed()</h3>
+      <p>
+        We get different sequences of random values because the <code>random()</code> function is called on each shape object every time 
+        the <code>draw()</code> function executes. To control randomness, <code>randomSeed()</code> is added to <code>draw()</code> so that
+        <code>random()</code> would always return the same sequence of random values.
+      </p>
+      <pre><code>
+function draw() {
+  background(0);
+  randomSeed(10);
+  shapes.forEach(shape => {
+    shape.render();
+  });
+}
+      </code></pre>
+
+      <h3>Changing the stroke weight of each line</h3>
+      <p>
+        To implement mouse interactivity in the sketch, the stroke weight of each diagonal line
+        changes according to the current mouse position. The following code is included in the 
+        <code>render()</code> method after translation.
+      </p>
+      <pre><code>
+d = dist(mouseX, mouseY, this.x, this.y);
+this.sw = map(d, 0, width, 2, 7);
+      </code></pre>
+      <p>
+        The <code>dist()</code> function calculates the distance between the mouse position and the diagonal line. The result is scaled 
+        from a range between 0 and the width to a range between 2 and 7.
       </p>
     </article>
   </main>
