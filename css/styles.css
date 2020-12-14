@@ -1,4 +1,4 @@
-/* @link https://utopia.fyi/generator-mk-ii?c=320,14,1.2,1140,20,1.25,6,2, */
+/* @link https://utopia.fyi/generator-mk-ii?c=320,15,1.2,1140,18,1.25,6,2, */
 
 :root {
     --auto-grid-min-size: 16rem;
@@ -31,10 +31,10 @@ body {
 
 a {
     text-decoration: none;
-    color: var(--card-link-color);
+    color: var(--text-color);
 }
 
-a:hover {
+a:hover, .grid-item-body a:hover {
     color: var(--link-hover-color);
 }
 
@@ -102,6 +102,10 @@ footer p {
 
 .grid-item-body {
     padding: 1.5rem 1.125rem;
+}
+
+.grid-item-body a {
+    color: var(--card-link-color);
 }
 
 .grid-item-body strong {
