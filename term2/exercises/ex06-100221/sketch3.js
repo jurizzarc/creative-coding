@@ -29,23 +29,18 @@ function addCircle() {
     let randX = random(width);
     let randY = random(height);
     let randR = floor(random(minR, maxR));
-    // Create a circle
-    let newC = new Circle(randX, randY, randR);
-    let closestDistance;
-    let closestIndex;
-    // Find closest circle by the distance
     for (let i = 0; i < circles.length; i++) {
-        let otherC = circles[i];
-        // Get distance between the coordinates of the circles
-        let distance = newC.coordinates.dist(otherC.coordinates);
-        // The circle with the lowest distance is the closest
-        if (closestDistance == undefined || distance < closestDistance) {
-            closestIndex = i;
-            closestDistance = distance;
-            // console.log(closestDistance);
-            // console.log(closestIndex);
+        let newC = new Circle(randX, randY, randR);
+        let overlapping = false;
+        for (let j = i + 1; j < circles.length; j++) {
+            let otherC = circles[j];
+            let distance = newC.coordinates.dist(otherC.coordinates);
+            if (distance < newC.radius + otherC.radius) {
+                overlapping = true;
+            }
+        }
+        if (!overlapping) {
+            circles.push(newC);
         }
     }
-    newC.dock(circles[closestIndex]);
-    circles.push(newC);
 }

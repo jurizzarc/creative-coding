@@ -2,20 +2,23 @@ class Circle {
     constructor(_x, _y, _r) {
         this.coordinates = createVector(_x, _y);
         this.radius = _r;
-        this.colour = color(floor(random(0, 20)), floor(random(70, 90)), floor(random(80, 100)));
+        this.colour = color(floor(random(0, 20)), 100, floor(random(75, 100)));
     }
 
     render() {
-        stroke(this.colour);
-        noFill();
+        noStroke();
+        fill(this.colour);
         ellipse(this.coordinates.x, this.coordinates.y, this.radius*2, this.radius*2);
     }
-
+    
     dock(_other) {
-        let vectorDiff = p5.Vector.sub(this.coordinates, _other.coordinates);
-        let angle = vectorDiff.heading();
-        let distance = vectorDiff.mag() - this.radius - _other.radius;
-        this.coordinates.x = this.coordinates.x - cos(angle) * distance;
-        this.coordinates.y = this.coordinates.y - sin(angle) * distance;
+        // Get distances between the coordinates of this and the other circle
+        let distanceVect = p5.Vector.sub(this.coordinates, _other.coordinates);
+        // Get angle of rotation for this vector
+        let angle = distanceVect.heading();
+        let moveDistance = distanceVect.mag() - this.radius - _other.radius;
+        // Update x and y coordinates of this circle
+        this.coordinates.x = this.coordinates.x - cos(angle) * moveDistance;
+        this.coordinates.y = this.coordinates.y - sin(angle) * moveDistance;
     } 
 }
