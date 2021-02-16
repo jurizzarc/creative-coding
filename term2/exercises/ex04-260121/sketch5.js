@@ -2,26 +2,26 @@ let stepSize = 1;
 let angle = 45;
 let angleCount = 5;
 let points = [];
-let xPos, yPos;
+let xPos1, yPos1, xPos2, yPos2;
 
 function setup() {
     createCanvas(500, 500);
-    background(0);
-    xPos = width/2;
-    yPos = height/2;
+    background('#f5f5f5');
+    xPos1 = 0;
+    yPos1 = 0;
 }
 
 function draw() {
     let speed = map(mouseX, 0, width, 2, 10);
     for (let i = 0; i < speed; i++) {
-        stroke(255);
+        xPos1 += cos(radians(angle) * stepSize);
+        yPos1 += sin(radians(angle) * stepSize);
         strokeWeight(2);
-        point(xPos, yPos);
-        xPos += cos(radians(angle) * stepSize);
-        yPos += sin(radians(angle) * stepSize);
-        storePoints(xPos, yPos);
-        if (xPos < 0 || xPos > width || yPos < 0 || yPos > height) {
-            angle = getRandomAngle(xPos, yPos);
+        stroke('#2FC6D0');
+        point(xPos1, yPos1);
+        // storePoints(xPos, yPos);
+        if (xPos1 < 0 || xPos1 > width || yPos1 < 0 || yPos1 > height) {
+            angle = getRandomAngle(xPos1, yPos1);
         }
     }
 }
