@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wrapping Paper</title>
+  <!-- CSS Reset -->
+  <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Mulish:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/stackoverflow-dark.min.css">
+  <link rel="stylesheet" href="../../../css/styles.css" type="text/css">
+</head>
+
+<body>
+  <main>
+    <article>
+      <header>
+        <h2>Wrapping Paper</h2>
+        <h6>Project – 24 Nov 2020</h6>
+      </header>
+      <section class="buttons">
+        <a class="button" href="sketch.html">View Sketch</a>
+        <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/shape-pattern/main-exercises/wrapping-paper-final">Source Code</a>
+      </section>
+      <p>
+        For our first assignment, we created a wrapping paper pattern using the p5.js library. This pattern will be
+        printed out on an A3 sheet of paper. The pattern I made was inspired by the basic types of weaving patterns: plain, twill, and
+        satin.
+      </p>
+
+      <h3>Implementation</h3>
+      <p>
+        The canvas contains a grid and this grid is made up of 100 grid cells. A warp and a weft thread is drawn on
+        each grid cell. On the canvas, the warp threads look like vertical rectangles, while the weft threads look like horizontal
+        rectangles. Depending on the type of weaving pattern chosen by the user, the warp is either drawn over the weft,
+        or drawn under the weft. The grid and the threads are objects created from a class called <code>Thread</code>.
+      </p>
+
+      <p>
+        The properties of an object created from the <code>Thread</code> class are the index numbers <code>i</code> and
+        <code>j</code>, the width and height of the grid cell, and the size of the thread.
+      </p>
+
+      <pre><code class="language-js">class Thread {
+  constructor(_i, _j) {
+    this.i = _i;
+    this.j = _j;
+    this.cw = cellWidth;
+    this.ch = cellHeight;
+    this.ts = threadSize;
+  }
+}</code></pre>
+
+        <p>
+          The width and height of the grid cell depend on the width and height of the canvas and the number of grid cells. 
+          The following variables are defined globally.
+        </p>
+
+        <pre><code class="language-js">const canvasWidth = 1754;
+const canvasHeight = 2481;
+let numOfCells = 10;
+let cellWidth = canvasWidth / numOfCells;
+let cellHeight = canvasHeight / numOfCells;</code></pre>
+
+        <p>The following are also global variables that will be used to create the threads.</p>
+
+        <pre><code class="language-js">const colorPalettes = [
+  ['#900C3E', '#50163F', '#FF5835', '#A90031'],
+  ['#B41D01', '#960000', '#FFCB18', '#FCB600'],
+  ['#DB1C1A', '#AE1417', '#3E8B54', '#2E5033'],
+  ['#004445', '#011C1D', '#6FB98F', '#2C7873']
+];
+
+let colorIndex = [0, 1, 2, 3];
+let paletteIndex = 0;
+let currentPalette;
+let weaveType = 'Plain';
+let threadSize = 3;</code></pre>
+
+        <p>
+          <code>colorPalettes</code> holds an array of colour palettes for the pattern, each defined as an array of 4 hex values. 
+          <code>colorIndex</code> holds an array of the index position of the hex values. <code>paletteIndex</code> refers to the 
+          index position of the colour palette that is used on the canvas. The value stored in <code>paletteIndex</code> changes 
+          when the user presses the right arrow key. This is one of the ways the user can interact with the sketch. 
+        </p>
+
+        <pre><code class="language-js">function keyPressed() {
+  if (keyCode === RIGHT_ARROW) {
+      paletteIndex = (paletteIndex + 1) % colorPalettes.length;
+  } 
+  redraw();
+}</code></pre>
+
+        <p>
+          To create the thread objects, I first initialised an empty array to the global variable <code>threads</code> and the number 
+          of grid cells is set to 10.
+        </p>
+
+        <pre><code class="language-js">let threads = [];
+let numOfCells = 10;</code></pre>
+
+        <p>
+          I then populated the <code>threads</code> array in <code>setup()</code> with the objects made from the <code>Thread</code> class. 
+          The array now holds 100 objects.
+        </p>
+
+        <pre><code class="language-js">function setup() {
+  createCanvas(canvasWidth, canvasHeight);
+  rectMode(CENTER);
+  smooth();
+  noLoop();
+
+  for (let i = 0; i < numOfCells; i++) {
+    for (let j = 0; j < numOfCells; j++) {
+        threads.push(new Thread(i, j));
+    }
+  }
+}</code></pre>
+
+        <p>
+          In the <code>Thread</code> class, I created a method called <code>render()</code>. When called, this method draws the grid and the weave 
+          pattern on the canvas. I made use of transformations so that each object made from the <code>Thread</code> class gets drawn 
+          within the canvas. 
+        </p>
+
+        <p>
+          In the code snippet below, the <code>render()</code> method draws a square with no fill and has a black outline on the 
+          canvas. The point of origin is set to the x and y positions of the grid cell, added to half the width and height of 
+          the grid cell. Those values are added because <code>rectMode</code> is set to CENTER. Without those values, the objects would be 
+          positioned slightly off the canvas.
+        </p>
+
+        <pre><code class="language-js">render() {
+  push();
+  let cellX = this.i * this.cw + this.cw / 2;
+  let cellY = this.j * this.ch + this.ch / 2;
+  translate(cellX, cellY);
+  noFill();
+  stroke('#000');
+  rect(0, 0, this.cw, this.ch);
+  pop();
+}</code></pre>
+
+        <p>
+          Weave is the interlacing of warp and weft threads at right angles in order to produce a woven fabric. To imitate 
+          this in p5.js, I started with the simplest of all basic weaves which is the plain weave. 
+        </p>
+
+        <p>
+          The purpose of the index numbers that are set to the <code>this.i</code> and <code>this.j</code> properties is so that I can assign each 
+          grid cell with a number and to make sure that the way the warp and weft threads are interlaced on the sketch will depend
+          on the type of weave chosen by the user. 
+        </p>
+
+        <p>
+          Initially, each grid cell were assigned two numbers, but to make the calculations easier, I added these two numbers 
+          together. For example, if a grid cell's <code>i</code> index number is 1 and its <code>j</code> index number is also 1 (1, 1) then its index number is 2. In the <code>render()</code> method, I added the following line of code before <code>pop()</code>.
+        </p>
+
+        <pre><code class="language-js">let indexNum = this.i + this.j;</code></pre>
+
+        <p>
+          To position the threads in the center of a grid cell, the value set to the <code>this.ts</code> property is multiplied to 2. 
+          I stored the product in the variable <code>threadPos</code>. This value will be later divided to the height or width of the grid 
+          cell. Four colours taken from the current colour palette on the canvas are also defined. I added the following lines 
+          of code after initialising <code>indexNum</code>.
+        </p>
+
+        <pre><code class="language-js">let threadPos = this.ts * 2;
+let col1 = currentPalette[colorIndex[0]];
+let col2 = currentPalette[colorIndex[1]];
+let col3 = currentPalette[colorIndex[2]];
+let col4 = currentPalette[colorIndex[3]];</code></pre>
+
+        <p>
+          The plain weave is made by interlacing warp and weft threads in an alternate manner. To create this pattern, I used 
+          conditional statements to check if the index number of a grid cell is an even number. If it is, the warp thread is 
+          drawn over the weft thread. Otherwise, the weft thread is drawn over the warp thread.
+        </p>
+
+        <pre><code class="language-js">if (weaveType == 'Plain') {
+  // Draw warp over weft
+  if (indexNum % 2 == 0) {
+      // Weft Threads
+      stroke(col1);
+      fill(col1);
+      rect(0, -this.ch/threadPos, this.cw, this.ch/this.ts);
+      stroke(col2);
+      fill(col2);
+      rect(0, this.ch/threadPos, this.cw, this.ch/this.ts);
+      // Warp Threads
+      stroke(col3)
+      fill(col3);
+      rect(-this.cw/threadPos, 0, this.cw/this.ts, this.ch);
+      stroke(col4);
+      fill(col4);
+      rect(this.cw/threadPos, 0, this.cw/this.ts, this.ch);
+  // Draw weft over warp
+  } else {
+      // Warp Threads
+      stroke(col3)
+      fill(col3);
+      rect(-this.cw/threadPos, 0, this.cw/this.ts, this.ch);
+      stroke(col4);
+      fill(col4);
+      rect(this.cw/threadPos, 0, this.cw/this.ts, this.ch);
+      // Weft Threads
+      stroke(col1);
+      fill(col1);
+      rect(0, -this.ch/threadPos, this.cw, this.ch/this.ts);
+      stroke(col2);
+      fill(col2);
+      rect(0, this.ch/threadPos, this.cw, this.ch/this.ts);
+  }
+}</code></pre>
+
+        <p>
+          The weft threads are created by placing two rectangles beside each other. The height of the weft thread is set to the 
+          height of the grid cell divided by the size of the thread. Its y position is set to the height of the grid cell divided 
+          by the value stored in the <code>threadPos</code> variable earlier. The height and the y position are set this way to make sure 
+          that the weft thread is horizontally centered in a grid cell. The warp threads are created in a similar way, but in reverse.
+        </p>
+
+        <p>
+          To view the plain weave pattern, I called the <code>render()</code> method on each object created from
+          the <code>Thread</code> class in the <code>draw()</code> function.
+        </p>
+
+        <pre><code class="language-js">function draw() {
+  background(bgColor);
+  currentPalette = colorPalettes[paletteIndex];
+  threads.forEach(thread => {
+      thread.render();
+  });
+}</code></pre>
+
+        <p>
+          The approach I took to generate a plain weave pattern was repeated to create the twill and satin weave patterns. To reuse the code, in the class <code>Thread</code>, 
+          I created the method <code>makeWeave()</code> that takes two parameters: <code>_type</code> which refers to the type of the weave pattern and <code>_num</code> which refers 
+          to the integer the index number will be divided to.
+        </p>
+
+        <pre><code class="language-js">makeWeave(_type, _num) {
+  let indexNum = this.i + this.j;
+  let threadPos = this.ts * 2; 
+  let col1 = currentPalette[colorIndex[0]];
+  let col2 = currentPalette[colorIndex[1]];
+  let col3 = currentPalette[colorIndex[2]];
+  let col4 = currentPalette[colorIndex[3]];
+
+  if (weaveType == _type) {
+    // Draw warp over weft
+    if (indexNum % _num == 0) {
+      // Weft Threads
+      stroke(col1);
+      fill(col1);
+      rect(0, -this.ch/threadPos, this.cw, this.ch / this.ts);
+      stroke(col2);
+      fill(col2);
+      rect(0, this.ch/threadPos, this.cw, this.ch / this.ts);
+      // Warp Threads
+      stroke(col3)
+      fill(col3);
+      rect(-this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+      stroke(col4);
+      fill(col4);
+      rect(this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+    // Draw weft over warp
+    } else {
+      // Warp Threads
+      stroke(col3)
+      fill(col3);
+      rect(-this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+      stroke(col4);
+      fill(col4);
+      rect(this.cw/threadPos, 0, this.cw / this.ts, this.ch);
+      // Weft Threads
+      stroke(col1);
+      fill(col1);
+      rect(0, -this.ch/threadPos, this.cw, this.ch / this.ts);
+      stroke(col2);
+      fill(col2);
+      rect(0, this.ch/threadPos, this.cw, this.ch / this.ts);
+    }
+  }
+}</code></pre>
+
+        <p>
+          I then called the <code>makeWeave()</code> method for each weave type in <code>render()</code>.
+        </p>
+
+        <pre><code class="language-js">this.makeWeave('Plain', 2);
+this.makeWeave('Twill', 3);
+this.makeWeave('Satin', 4);</code></pre>
+
+        <p>
+          Lastly, I included an interface built using dat.GUI to let the user control
+          the appearance of the weave pattern.
+        </p>
+
+        <h3>Results</h3>
+        <p>Below are some weave patterns that I made on the program.</p>
+
+        <figure>
+          <img src="samples/sample1.png" alt="Weave Pattern 1">
+        </figure>
+
+        <figure>
+          <img src="samples/sample4.png" alt="Weave Pattern 4">
+        </figure>
+
+        <figure>
+          <img src="samples/sample5.png" alt="Weave Pattern 5">
+        </figure>
+
+        <h3>What can be improved</h3>
+        <p>
+          To take this pattern further, I would look at better references and let the user have more control over
+          how the threads get drawn on the canvas. I would think of a more effective way than using modulo division to 
+          recreate a weave pattern. And to better the aesthetics, I would use better colour palettes and apply shadows. The threads could
+          also be drawn in different ways instead of just horizontally or vertically.
+        </p>
+    </article>
+
+    <footer>
+      <p>
+          Jurizza Cuaresma<br/>
+          <a href="../../../index.html">Home</a> &#8725; <a href="https://github.com/jurizzarc/creative-coding">GitHub</a>
+      </p>
+    </footer>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</body>
+
+</html>
