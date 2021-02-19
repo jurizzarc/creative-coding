@@ -84,4 +84,4 @@ let s = function(p) {
         }
     };
 };
-new p5(s, 'sketch')
+new p5(s, 'sketch');
