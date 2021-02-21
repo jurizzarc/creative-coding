@@ -1,41 +1,41 @@
-let canvasSize = 500;
-let stepSize = 4;
+let x, y, colours;
+let diam = 12;
+let step = diam/2;
+let t = 0;
 let optionsX = [-1, 0, 1];
 let optionsY = [-1, 0, 1];
-let colors;
-let xPos, yPos;
 
 function setup() {
-    createCanvas(canvasSize, canvasSize);
-    background('#E2D8A3');
-    xPos = width/2;
-    yPos = height/2;
-    colors = [
-        color(225, 182, 83),
-        color(225, 105, 78)
+    createCanvas(500, 500);
+    background(255);
+    x = width/2;
+    y = height/2;
+    colours = [
+        color(107, 61, 79),
+        color(148, 76, 102),
+        color(180, 111, 131),
+        color(244, 118, 154),
+        color(253, 138, 178),
+        color(247, 166, 188)
     ];
-    // noLoop();
+    // frameRate(150);
 }
 
 function draw() {
-    //let speed = map(mouseX, 0, width, 1, 3);
-
-    let randomX = floor(random(0, optionsX.length));
-    let randomY = floor(random(0, optionsY.length));
-    let moveX = randomX * stepSize;
-    let moveY = randomY * stepSize;
-    xPos += moveX;
-    yPos += moveY;
-    xPos > width ? xPos = 0: null;
-    xPos < 0 ? xPos = width: null;
-    yPos > height ? yPos = 0: null;
-    yPos < 0 ? yPos = height: null;
-
-    let col = random(colors);
-    let a = floor(random(150, 200));
-    col.setAlpha(a);
-    let radB = floor(random(8, 12));
+    let randX = floor(random(0, optionsX.length));
+    let randY = floor(random(0, optionsY.length));
+    let randC = floor(random(0, colours.length));
+    let moveX = optionsX[randX] * step * noise(t);
+    let moveY = optionsY[randY] * step * noise(t);
+    let colour = colours[randC];
+    x += moveX;
+    y += moveY;
+    t += 0.03;
+    if (x < 0) x = width;
+    if (x > width) x = 0;
+    if (y < 0) y = height;
+    if (y > height) y = 0;
     noStroke();
-    fill(col);
-    ellipse(xPos, yPos, radB*2, radB*2);
+    fill(colour);
+    ellipse(x, y, diam);
 }
