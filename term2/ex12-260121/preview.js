@@ -25,12 +25,12 @@ let s = function (p) {
             y2 = p.height - y1;
             p.stroke('#D0392F');
             p.point(x2, y2);
-            if (x1 < 0 || x1 > p.width || y1 < 0 || y1 > p.height) angle = p.getRandomAngle(x1, y1);
+            if (x1 < 0 || x1 > p.width/2 || y1 < 0 || y1 > p.height) angle = p.getRandomAngle(x1, y1);
         }
     };
     p.getRandomAngle = function (_x, _y) {
         let randomAngle = (p.floor(p.random(-angleCount, angleCount)) + 0.5) * 90 / angleCount;
-        if (_x > p.width) return randomAngle + 180;
+        if (_x > p.width/2) return randomAngle + 180;
         if (_x < 0) return randomAngle;
         if (_y > p.height) return randomAngle - 90;
         if (_y < 0) return randomAngle + 90;

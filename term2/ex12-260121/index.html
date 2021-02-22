@@ -26,7 +26,7 @@
       <header>
         <h3>Random Angles</h3>
         <span class="sketch-info">
-          The sketch above shows the direction of a point and how it bounces off the sides of the canvas at a random angle.
+          The sketch above shows the direction of a point and how it bounces at a random angle when it hits certain boundaries.
           The other point mirrors its movement.
         </span>
       </header>
@@ -66,21 +66,21 @@ function draw() {
   stroke('#D0392F');
   point(x2, y2);
 }</code></pre>
-      <h4>Checking if the point is outside of the canvas</h4>
+      <h4>Checking if the point reaches the middle and outside of the canvas</h4>
       <p>
-        The point bounces at a random angle when it reaches an edge of the canvas. There is control over how
+        The point bounces at a random angle when it reaches the centre and an edge of the canvas. There is control over how
         this angle is generated.
       </p>
 <pre><code>let angleCount = 5;
 
 function draw() {
   [...]
-  if (x1 < 0 || x1 > width || y1 < 0 || y1 > height) angle = getRandomAngle(x1, y1);
+  if (x1 < 0 || x1 > width/2 || y1 < 0 || y1 > height) angle = getRandomAngle(x1, y1);
 }
 
 function getRandomAngle(_x, _y) {
   let randomAngle = (floor(random(-angleCount, angleCount)) + 0.5) * 90 / angleCount;
-  if (_x > width) return randomAngle + 180;
+  if (_x > width/2) return randomAngle + 180;
   if (_x < 0) return randomAngle;
   if (_y > height) return randomAngle - 90;
   if (_y < 0) return randomAngle + 90;

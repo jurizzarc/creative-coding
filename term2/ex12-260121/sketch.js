@@ -1,7 +1,7 @@
 let stepSize = 1;
 let angle = 45;
 let angleCount = 5;
-let x1, y1, x2, y2;
+let x1, y1, x2, y2, img;
 
 function setup() {
     createCanvas(500, 500);
@@ -23,14 +23,14 @@ function draw() {
         y2 = height - y1;
         stroke('#D0392F');
         point(x2, y2);
-        if (x1 < 0 || x1 > width || y1 < 0 || y1 > height) angle = getRandomAngle(x1, y1);
+        if (x1 < 0 || x1 > width/2 || y1 < 0 || y1 > height) angle = getRandomAngle(x1, y1);
     }
 }
 
 function getRandomAngle(_x, _y) {
     let randomAngle = (floor(random(-angleCount, angleCount)) + 0.5) * 90 / angleCount;
     // console.log(randomAngle);
-    if (_x > width) return randomAngle + 180;
+    if (_x > width/2) return randomAngle + 180;
     if (_x < 0) return randomAngle;
     if (_y > height) return randomAngle - 90;
     if (_y < 0) return randomAngle + 90;
