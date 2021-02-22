@@ -2,7 +2,7 @@ class Circle {
     constructor(_x, _y, _r) {
         this.coordinates = createVector(_x, _y);
         this.radius = _r;
-        this.colour = color(floor(random(0, 20)), 100, floor(random(75, 100)));
+        this.colour = color(360, floor(random(75, 100)), floor(random(70, 100)));
     }
 
     render() {
@@ -12,7 +12,7 @@ class Circle {
     }
     
     dock(_other) {
-        // Get distances between the coordinates of this and the other circle
+        // Get distances between the coordinates of this circle and the other circle
         let distanceVect = p5.Vector.sub(this.coordinates, _other.coordinates);
         // Get angle of rotation for this vector
         let angle = distanceVect.heading();

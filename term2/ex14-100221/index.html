@@ -7,10 +7,14 @@
   <title>Growth</title>
   <!-- CSS Reset -->
   <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&family=Montserrat:wght@600;800&family=Work+Sans:wght@300;400;500&display=swap"
-        rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&family=Montserrat:wght@600;800&family=Work+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <!-- Syntax Highlighting -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/stackoverflow-dark.min.css">
   <link rel="stylesheet" href="../../css/styles.css" type="text/css">
 </head>
 
@@ -22,22 +26,150 @@
       <header>
         <h3>Growth</h3>
         <span class="sketch-info">
-          Circles with random radii are drawn on the canvas.
+          A circle with a random radius and colour is drawn on the canvas and positioned next to the circle
+          that is closest to it.
         </span>
       </header>
-    </article>
+      <h4>Creating the first circle</h4>
+      <p>
+        A circle object created from the class <code>Circle</code> has the following properties. This class takes values for the 
+        x and y coordinates and the radius. The <code>colorMode()</code> is set to HSB and the random colour that
+        is generated is a shade of red.
+      </p>
+<pre><code class="language-js">class Circle {
+  constructor(_x, _y, _r) {
+    this.coordinates = createVector(_x, _y);
+    this.radius = _r;
+    this.colour = color(360, floor(random(75, 100)), floor(random(70, 100)));
+  }
+}</code></pre>
+      <p>
+        The first circle is positioned at the centre of the canvas. This object is inserted into the <code>circles</code> array which is used 
+        to store all the circles that are drawn on the canvas.
+      </p>
+<pre><code class="language-js">let circles;
+let minRadius = 5;
+let maxRadius = 10;
+let circle0;
 
+function setup() {
+  [...]
+  circle0 = new Circle(width/2, height/2, maxRadius);
+  circles.push(circle0);
+}</code></pre>
+      <h4>Creating the other circles</h4>
+      <p>
+        The <code>addCircle()</code> function creates a new circle object each time <code>draw()</code> runs. At first, 
+        the circles that are created are given random <code>x</code> and <code>y</code> positions. 
+      </p>
+<pre><code class="language-js">function draw() {
+  background(217, 0, 100);
+  addCircle();
+}
+
+function addCircle() {
+  let randX = random(width);
+  let randY = random(height);
+  let randR = floor(random(minR, maxR));
+  // Create a circle
+  let newC = new Circle(randX, randY, randR);
+  circles.push(newC);
+}</code></pre>
+      <h4>Drawing the circles</h4>
+      <p>
+        The <code>render()</code> method of class <code>Circle</code> draws an ellipse and is called
+        on each circle object.
+      </p>
+<pre><code class="language-js">class Circle {
+  [...]
+  render() {
+    noStroke();
+    fill(this.colour);
+    ellipse(this.coordinates.x, this.coordinates.y, this.radius*2, this.radius*2);
+  }
+}
+
+function draw() {
+  [...]
+  circles.forEach(circle => {
+    circle.render();
+  });
+}</code></pre>
+      <p>
+        Since the algorithm that places the circle to the shape nearest to it has not been applied yet,
+        the circles are positioned randomly on the canvas.
+      </p>
+      <figure>
+        <img src="images/addCircle1.png" alt="Circles randomly positioned on the canvas">
+      </figure>
+      <h4>Finding the closest circle</h4>
+      <p>
+        The Euclidean Distance is used to find the closest circle. The distance between the points of the circle <code>newC</code> and 
+        the other circle <code>otherC</code> is calculated using <code>p5.Vector.dist()</code>. The circle with the lowest distance is the
+        closest circle. The following code is added before adding the new circle to the array.
+      </p>
+<pre><code class="language-js">function addCircle() {
+  [...]
+  let closestDistance;
+  let closestIndex;
+  for (let i = 0; i < circles.length; i++) {
+    let otherC = circles[i];
+    // Calculate Euclidean Distance between two points
+    let distance = newC.coordinates.dist(otherC.coordinates);
+    if (closestDistance == undefined || distance < closestDistance) {
+      closestIndex = i;
+      closestDistance = distance;
+    }
+  }
+}</code></pre>
+      <p>
+        After looping through the <code>circles</code> array, the <code>dock()</code> method is called on <code>newC</code> to update its
+        x and y coordinates, placing it to the closest circle. 
+      </p>
+<pre><code class="language-js">class Circle {
+  [...]
+  dock(_other) {
+    // Get distances between the coordinates of this circle and the other circle
+    let distanceVect = p5.Vector.sub(this.coordinates, _other.coordinates);
+    // Get angle of rotation for this vector
+    let angle = distanceVect.heading();
+    let moveDistance = distanceVect.mag() - this.radius - _other.radius;
+    // Update x and y coordinates of this circle
+    this.coordinates.x = this.coordinates.x - cos(angle) * moveDistance;
+    this.coordinates.y = this.coordinates.y - sin(angle) * moveDistance;
+  }
+}
+
+function addCircle() {
+  [...]
+  newC.dock(circles[closestIndex]);
+  circles.push(newC);
+}</code></pre>
+      <p>
+        The circle that is created each time <code>draw()</code> runs is now placed next to the
+        circle that is closest to it.
+      </p>
+      <figure>
+        <img src="images/addCircle2.png" alt="With docking">
+      </figure>
+    </article>
     <footer>
       <p>
-          Jurizza Cuaresma<br/>
-          <a href="../../../index.html">Home</a> &#8725; <a href="https://github.com/jurizzarc/creative-coding">GitHub</a>
+          <strong>Jurizza Cuaresma</strong><br/>
+          <a href="../../index.html">Home</a> &#8725; 
+          <a href="mailto:jurizzarc@gmail.com">Contact</a> &#8725;
+          <a href="https://github.com/jurizzarc/creative-coding">GitHub</a>
       </p>
     </footer>
   </main>
 
+  <!-- Syntax Highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <!-- P5 Sketch -->
   <script src="../../libraries/p5/p5.min.js" type="text/javascript"></script>
   <script src="../../libraries/p5/p5.dom.min.js" type="text/javascript"></script>
-  <script src="sketch.js" type="text/javascript"></script>
+  <script src="preview.js" type="text/javascript"></script>
 </body>
 
 </html>
