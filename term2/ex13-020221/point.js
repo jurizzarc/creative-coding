@@ -6,7 +6,7 @@ class Point {
     drawEllipse() {
         noStroke();
         fill(color);
-        ellipse(this.coordinates.x, this.coordinates.y, 5, 5);
+        ellipse(this.coordinates.x, this.coordinates.y, 5);
     }
 
     drawLine(_index) {
@@ -15,7 +15,6 @@ class Point {
     }
 
     drawCurveVertex() {
-        stroke(color);
         curveVertex(this.coordinates.x, this.coordinates.y);
     }
 }
