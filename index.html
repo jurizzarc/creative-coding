@@ -7,6 +7,7 @@
     <title>Creative Coding – Jurizza Cuaresma</title>
     <!-- CSS Reset -->
     <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&family=Montserrat:wght@600;800&family=Work+Sans:wght@300;400;500&display=swap"
@@ -18,9 +19,18 @@
     <main>
         <header>
             <h3 class="title">Creative<br />Coding</h3>
-            <div class="links">
-                <i data-feather="github"></i>
-            </div>
+            <ul class="menu">
+                <li class="link">
+                    <a href="mailto:jurizzarc@gmail.com">
+                        <i data-feather="mail"></i>
+                    </a>
+                </li>
+                <li class="link">
+                    <a href="https://github.com/jurizzarc/creative-coding">
+                        <i data-feather="github"></i>
+                    </a>
+                </li>
+            </ul>
         </header>
 
         <div class="auto-grid">
@@ -51,7 +61,7 @@
 
             <div class="grid-item">
                 <div class="grid-item-img">
-                    <img src="images/blank.png" alt="Exercise 12">
+                    <img src="images/ex12.png" alt="Exercise 12">
                 </div>
                 <div class="grid-item-body">
                     <a href="term2/ex12-260121/index.html">
@@ -63,11 +73,11 @@
 
             <div class="grid-item">
                 <div class="grid-item-img">
-                    <img src="images/blank.png" alt="Exercise 11">
+                    <img src="images/ex11.png" alt="Exercise 11">
                 </div>
                 <div class="grid-item-body">
-                    <a href="#">
-                        <strong>Random Walker</strong>
+                    <a href="term2/ex11-250121/index.html">
+                        <strong>Random Walk</strong>
                     </a>
                     <small>Exercise 11</small>
                 </div>
@@ -221,12 +231,18 @@
 
         <footer>
             <p>
-                Jurizza Cuaresma<br />
-                <a href="mailto:jurizzarc@gmail.com">Contact</a> &#8725; 
+                <strong>Jurizza Cuaresma</strong><br />
+                <a href="mailto:jurizzarc@gmail.com">Contact</a> &#8725;
                 <a href="https://github.com/jurizzarc/creative-coding">GitHub</a>
             </p>
         </footer>
     </main>
+
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script type="text/javascript">
+        feather.replace();
+    </script>
 </body>
 
 </html>
