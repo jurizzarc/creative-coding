@@ -6,8 +6,8 @@ class Circle {
     }
 
     render() {
-        noStroke();
-        fill(this.colour);
+        noFill();
+        stroke(this.colour);
         ellipse(this.coordinates.x, this.coordinates.y, this.radius*2, this.radius*2);
     }
     

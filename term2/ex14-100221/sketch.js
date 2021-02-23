@@ -1,49 +1,46 @@
 let circles = [];
 let minR = 5;
 let maxR = 10;
-let fc = 150;
-let circle0, circle1;
+let fc = 400;
+let circle0;
 
 function setup() {
     createCanvas(500, 500);
     colorMode(HSB);
-    // frameRate(2);
     // noLoop();
     circle0 = new Circle(width/2, height/2, maxR);
     circles.push(circle0);
-    // circle1 = new Circle(width/3, height/2, minR);
-    // circles.push(circle1);
 }
 
 function draw() {
     background(217, 0, 100);
-    // circle1.dock(circle0);
-    addCircle();
+    if (circles.length <= 400) {
+        let randX = random(width);
+        let randY = random(height);
+        let randR = floor(random(minR, maxR));
+        // Create a circle
+        let circle = new Circle(randX, randY, randR);
+        addCircle(circle);
+    }
     circles.forEach(circle => {
         circle.render();
     });
-    if (frameCount >= fc) noLoop();
 }
 
-function addCircle() {
-    let randX = random(width);
-    let randY = random(height);
-    let randR = floor(random(minR, maxR));
-    // Create a circle
-    let newC = new Circle(randX, randY, randR);
-    let closestDistance;
-    let closestIndex;
+function addCircle(_newCircle) {
+    let newC = _newCircle;
+    let closestDistance, closestIndex;
     // Find closest circle by the distance
     for (let i = 0; i < circles.length; i++) {
         let otherC = circles[i];
         // Get distance between the coordinates of the circles
-        let distance = newC.coordinates.dist(otherC.coordinates);
-        // The circle with the lowest distance is the closest circle
+        let distance = newC.coordinates.dist(otherC.coordinates) - newC.radius - otherC.radius;
+        // Do not include newC if it overlaps other circles
+        if (distance < 0) return null;
+        // The circle with the lowest distance is the closest circle to newC
         if (closestDistance == undefined || distance < closestDistance) {
             closestIndex = i;
             closestDistance = distance;
-            // console.log(closestDistance);
-            // console.log(closestIndex);
         }
     }
     newC.dock(circles[closestIndex]);
