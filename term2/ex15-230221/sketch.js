@@ -1,9 +1,12 @@
 let circles = [];
 let minR = 10;
 let maxR = 20;
+let strokeW = 2;
 
 function setup() {
     createCanvas(500, 500);
+    colorMode(HSB);
+    // noLoop();
     let circle0 = new Circle(width/2, height/2, maxR*2);
     circles.push(circle0);
 }
@@ -27,7 +30,7 @@ function draw() {
                 if (other != circle) {
                     let distance = circle.coordinates.dist(other.coordinates);
                     // Stop circle from growing if it collides with other circle
-                    if (distance < circle.radius + other.radius) circle.isGrowing = false;
+                    if (distance < circle.radius + other.radius + strokeW) circle.isGrowing = false;
                 }
             }
         }

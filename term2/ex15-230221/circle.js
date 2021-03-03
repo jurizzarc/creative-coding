@@ -3,6 +3,10 @@ class Circle {
         this.coordinates = createVector(_x, _y);
         this.radius = _r;
         this.isGrowing = true;
+        let h = floor(random(190, 220));
+        let s = floor(random(65, 80));
+        let b = floor(random(70, 90));
+        this.strokeC = color(h, s, b);
     }
 
     // Increases radius 
@@ -22,8 +26,8 @@ class Circle {
 
     render() {
         noFill();
-        stroke(0);
-        strokeWeight(2);
+        strokeWeight(strokeW);
+        stroke(this.strokeC);
         ellipse(this.coordinates.x, this.coordinates.y, this.radius*2);
     }
 }
