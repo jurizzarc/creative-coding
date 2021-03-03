@@ -6,8 +6,8 @@ let s = function (p) {
             this.colour = p.color(360, p.floor(p.random(75, 100)), p.floor(p.random(70, 100)));
         }
         render() {
-            p.noStroke();
-            p.fill(this.colour);
+            p.noFill();
+            p.stroke(this.colour);
             p.ellipse(this.coordinates.x, this.coordinates.y, this.radius*2, this.radius*2);
         }
         dock(_other) {
@@ -22,6 +22,7 @@ let s = function (p) {
         }
     };
     let circles = [];
+    let numOfCircles = 200;
     let minR = 5;
     let maxR = 10;
     let fc = 75;
@@ -37,25 +38,28 @@ let s = function (p) {
     };
     p.draw = function() {
         p.background(217, 0, 100);
-        p.addCircle();
+        if (circles.length <= numOfCircles) {
+            let randX = p.random(p.width);
+            let randY = p.random(p.height);
+            let randR = p.floor(p.random(minR, maxR));
+            // Create a circle
+            let circle = new Circle(randX, randY, randR);
+            p.addCircle(circle);
+        }
         circles.forEach(circle => {
             circle.render();
         });
-        if (p.frameCount >= fc) p.noLoop();
     };
-    p.addCircle = function() {
-        let randX = p.random(p.width);
-        let randY = p.random(p.height);
-        let randR = p.floor(p.random(minR, maxR));
-        // Create a circle
-        let newC = new Circle(randX, randY, randR);
-        let closestDistance;
-        let closestIndex;
+    p.addCircle = function(_newCircle) {
+        let newC = _newCircle;
+        let closestDistance, closestIndex;
         // Find closest circle by the distance
         for (let i = 0; i < circles.length; i++) {
             let otherC = circles[i];
             // Get distance between the coordinates of the circles
-            let distance = newC.coordinates.dist(otherC.coordinates);
+            let distance = newC.coordinates.dist(otherC.coordinates) - newC.radius - otherC.radius;
+            // Do not include newC if it overlaps other circle
+            if (distance < 0) return null;
             // The circle with the lowest distance is the closest
             if (closestDistance == undefined || distance < closestDistance) {
                 closestIndex = i;

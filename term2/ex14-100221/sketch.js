@@ -1,7 +1,7 @@
 let circles = [];
+let numOfCircles = 300;
 let minR = 5;
 let maxR = 10;
-let fc = 400;
 let circle0;
 
 function setup() {
@@ -14,7 +14,7 @@ function setup() {
 
 function draw() {
     background(217, 0, 100);
-    if (circles.length <= 400) {
+    if (circles.length <= numOfCircles) {
         let randX = random(width);
         let randY = random(height);
         let randR = floor(random(minR, maxR));
@@ -35,7 +35,7 @@ function addCircle(_newCircle) {
         let otherC = circles[i];
         // Get distance between the coordinates of the circles
         let distance = newC.coordinates.dist(otherC.coordinates) - newC.radius - otherC.radius;
-        // Do not include newC if it overlaps other circles
+        // Do not include newC if it overlaps other circle
         if (distance < 0) return null;
         // The circle with the lowest distance is the closest circle to newC
         if (closestDistance == undefined || distance < closestDistance) {
