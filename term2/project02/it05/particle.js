@@ -52,8 +52,7 @@ class Particle {
         // point(this.pos.x, this.pos.y);
 
         fill(this.col);
-        strokeWeight(randomNum == 0 ? random(0.75, 2) : 0.75);
-        stroke(this.col[0], this.col[1], this.col[2], randomNum == 0 ? round(random(50, 75)) : 75);
+        noStroke();
         let r = 6 * this.life;
         ellipse(this.pos.x, this.pos.y, r);
     }

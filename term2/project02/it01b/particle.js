@@ -19,15 +19,7 @@ class Particle {
      */
     isInText(_pos) {
         let px = pg.get(floor(_pos.x), floor(_pos.y));
-        // let pxR = px[0];
-        // let pxG = px[1];
-        // let pxB = px[2];
-
-        // return (
-        //     pxR == pgCol.levels[0] &&
-        //     pxG == pgCol.levels[1] &&
-        //     pxB == pgCol.levels[2] 
-        // );
+        
         return (
             px[0] == pgCol.levels[0] &&
             px[1] == pgCol.levels[1] &&

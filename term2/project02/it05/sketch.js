@@ -4,7 +4,7 @@ let particles = [];           // Where particles are stored
 let bgCol, pgCol, pg, zOff, colors;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(700, 600);
     smooth();
     pixelDensity(2);
     bgCol = color(4, 17, 35);
@@ -17,13 +17,10 @@ function setup() {
     ];
     // Create off-screen graphics
     pg = createGraphics(width, height);
-    pg.textSize(400);
+    pg.textSize(200);
     pg.textAlign(CENTER, CENTER);
     pg.fill(pgCol);
     pg.text(str, pg.width/2, pg.height/2);
-    for (let i = 0; i < numOfParticles; i++) {
-        particles.push(new Particle());
-    }
     image(pg, 0, 0);
     background(bgCol);
 }

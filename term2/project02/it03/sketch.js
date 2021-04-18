@@ -7,7 +7,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     smooth();
     pixelDensity(2);
-    bgCol = color(245);
+    bgCol = color(4, 17, 35);
     pgCol = color(0);
     // Create off-screen graphics
     pg = createGraphics(width, height);

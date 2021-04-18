@@ -47,7 +47,7 @@ class Particle {
         let randomNum = round(random(0, 1));
         noFill();
         strokeWeight(randomNum == 0 ? random(0.50, 1) : 0.50);
-        stroke(0, randomNum == 0 ? round(random(50, 75)) : 75);
+        stroke(50, 162, 173, randomNum == 0 ? round(random(50, 75)) : 75);
         point(this.pos.x, this.pos.y);
     }
 }
