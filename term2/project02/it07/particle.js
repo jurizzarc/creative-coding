@@ -7,7 +7,7 @@ class Particle {
     }
 
     getPosition(_x, _y) {
-        while (this.coordinates == null || this.isInText(this.coordinates)) this.coordinates = createVector(random(r, width-r), random(r, height-r));
+        while (this.coordinates == null || !this.isInText(this.coordinates)) this.coordinates = createVector(random(r, width-r), random(r, height-r));
     }
 
     isInText(_coordinates) {

@@ -1,9 +1,9 @@
 const numOfParticles = 1000;
 const includeStr = false;
 let particles = [];
-let str = 'FLOW';
-let r = 2;
-let pg, pgCol;
+let str = 'hey';
+let r = 1;
+let graphics, graphicsCol;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);

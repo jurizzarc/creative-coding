@@ -37,7 +37,7 @@ function draw() {
         // Draw circle
         circles[i].render();
         // Increase its radius
-        circles[i].grow();
+        // circles[i].grow();
     }
 }
 
