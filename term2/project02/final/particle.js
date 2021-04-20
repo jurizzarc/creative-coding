@@ -1,23 +1,18 @@
 class Particle {
     constructor(_r) {
-        this.getPosition();
-        this.life = random(0.2, 0.6);
+        this.setCoordinates();
+        this.life = random(0.1, maxLife);
         this.lifeRate = random(0.01, 0.05);
-        if (drawMode === 1) {
-            // this.radius = _r;
-            this.color = currentPalette[int(random(1, currentPalette.length))];
-        } 
+        this.color = currentPalette[floor(random(1, currentPalette.length))];
+        this.angle;
+        if (drawMode === 3 || drawMode === 4) this.radius = _r;
     }
 
-    getPosition(_x, _y) {
+    setCoordinates(_x, _y) {
         while (this.coordinates == null || 
                props.withinText && !this.isInText(this.coordinates) || 
                !props.withinText && this.isInText(this.coordinates)) {
-            if (drawMode === 1) {
-                this.coordinates = createVector(random(width), random(height));
-            } else {
-                this.coordinates = createVector(random(rad, width-rad), random(rad, height-rad));
-            }
+            this.coordinates = createVector(random(width), random(height));
         } 
     }
 
@@ -32,14 +27,12 @@ class Particle {
     }
 
     update() {
-        let xOff, yOff, zOff;
-        if (drawMode === 1) {
-            xOff = 0.06;
-            yOff = 0.06;
-        }
-        let angle = noise(this.coordinates.x*xOff, this.coordinates.y*yOff) * TWO_PI;
-        let vel = p5.Vector.fromAngle(angle);
-        this.coordinates.add(vel);
+        if (drawMode === 1 || drawMode === 3) noiseStrength = TWO_PI;
+        if (drawMode === 2) noiseStrength = PI;
+        if (drawMode === 4) noiseStrength = 300;
+        this.angle = noise(this.coordinates.x*noiseScale, this.coordinates.y*noiseScale) * noiseStrength;
+        this.coordinates.x += cos(this.angle) * stepSize;
+        this.coordinates.y += sin(this.angle) * stepSize;
         this.life -= this.lifeRate;
     }
 
@@ -47,19 +40,29 @@ class Particle {
      * Draws particle on the canvas
      */
     render() {
-        // noStroke();
-        // fill(this.color);
-        // ellipse(this.coordinates.x, this.coordinates.y, this.radius*this.life);
-        let options = [0, 0, 1, 1];
-        let randomNum = floor(random(0, options.length));
+        let aOptions, a;
+        let swOptions = [0.25, 0.50, 0.75, 1, 1.25, 1.50, 1.75, 2];
+        let sw = swOptions[floor(random()*swOptions.length)];
         let r = this.color.levels[0];
         let g = this.color.levels[1];
         let b = this.color.levels[2];
-        if (drawMode === 1) {
+        if (drawMode === 1 || drawMode === 2) {
+            aOptions = [20, 30, 40, 50, 60, 70, 80];
+            a = aOptions[floor(random()*aOptions.length)];
             noFill();
-            strokeWeight(randomNum === 0 ? random(0.50, 2) : 0.75);
-            stroke(r, g, b, randomNum === 0 ? round(random(50, 75)) : 75);
+            strokeWeight(sw);
+            stroke(r, g, b, a);
             point(this.coordinates.x, this.coordinates.y);
+        } else if (drawMode === 3) {
+            fill(this.color);
+            noStroke();
+            ellipse(this.coordinates.x, this.coordinates.y, this.radius*this.life);
+        } else if (drawMode === 4) {
+            aOptions = [100, 120, 140, 160, 180, 200];
+            a = aOptions[floor(random()*aOptions.length)];
+            noFill();
+            stroke(r, g, b, a);
+            ellipse(this.coordinates.x, this.coordinates.y, this.radius*this.life);
         }
     }
 }

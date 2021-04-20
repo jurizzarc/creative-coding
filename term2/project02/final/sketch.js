@@ -2,57 +2,65 @@ const numOfParticles = 1000;
 let particles = [];
 let fontSize = 300;
 let drawMode = 1;
-let graphics, graphicsCol;
-let colorPalettes, currentPalette, paletteIndex;
-let rad, withinText;
+let graphics, graphicsFont, graphicsCol;
+let colorPalettes, currentPalette;
+let paletteIndex = 0;
 let str = 'flow';
+let noiseScale = 0.03;
+let maxLife = 0.4;
+let stepSize = 1;
+let rad = 6;
+let noiseStrength, zOff;
 
 let props = {
-    withinText: false
+    text: str,
+    fontSize: fontSize,
+    mode: drawMode,
+    colorPalette: paletteIndex,
+    withinText: false,
+    noiseScale: noiseScale,
+    maxLife: maxLife,
+    stepSize: stepSize
 };
 
+function preload() {
+    graphicsFont = loadFont('assets/Avenir.otf');
+}
+
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth-230, windowHeight);
     smooth();
     pixelDensity(2);
-    frameRate(36);
+    frameRate(24);
     createGUI();
     // noLoop();
+
+    // message = createElement('p', 'Press 1-3 to change draw modes');
+    // message.position(windowWidth-200, 10);
 
     colorPalettes = [
         [
             color(4, 17, 35),
+            color(13, 43, 103),
             color(50, 162, 173),
-            color(50, 173, 122),
-            color(50, 101, 173)
-        ]
+            color(169, 226, 255),
+            color(255, 112, 98)
+        ],
+        [
+            color(243, 253, 248),
+            color(169, 208, 207),
+            color(54, 169, 154),
+            color(2, 90, 64),
+            color(3, 42, 48)
+        ],
     ];
-
-    switch (drawMode) {
-        case 1:
-            paletteIndex = 0;
-            break;
-        case 2:
-            paletteIndex = 0;
-            break;
-    }
-
-    currentPalette = colorPalettes[paletteIndex];
     graphicsCol = color(0);
-    graphics = createGraphics(width, height);
-    createText();
-    background(currentPalette[0]);
+
+    resetSketch();
 }
 
 function draw() {
-    switch (drawMode) {
-        case 1:
-            paletteIndex = 0;
-            break;
-        case 2:
-            paletteIndex = 0;
-            break;
-    }
+    currentPalette = colorPalettes[paletteIndex];
     updateParticles();
     while (particles.length < numOfParticles) addParticle();
     
@@ -64,6 +72,7 @@ function draw() {
 }
 
 function createText() {
+    graphics.textFont(graphicsFont);
     graphics.textSize(fontSize);
     graphics.textAlign(CENTER, CENTER);
     graphics.fill(graphicsCol);
@@ -73,18 +82,66 @@ function createText() {
 
 function createGUI() {
     const gui = new dat.GUI();
+    const textFolder = gui.addFolder('Text');
     const flowFieldFolder = gui.addFolder('Flow Field');
+    textFolder.open();
     flowFieldFolder.open();
 
-    flowFieldFolder.add(props, 'withinText').onChange(function() {
-        redrawSketch();
+    textFolder.add(props, 'text').onChange(function (value) {
+        str = value;
+        resetSketch();
+        redraw();
     });
+    textFolder.add(props, 'fontSize', 200, 700).step(25).onChange(function (value) {
+        fontSize = value;
+        resetSketch();
+        redraw();
+    });
+
+    flowFieldFolder.add(props, 'mode', ['1', '2', '3', '4']).onChange(function (value) {
+        drawMode = parseInt(value);
+        resetSketch();
+        redraw();
+    });
+    flowFieldFolder.add(props, 'colorPalette', ['0', '1']).onChange(function (value) {
+        paletteIndex = parseInt(value);
+        resetSketch();
+        redraw();
+    });
+    flowFieldFolder.add(props, 'withinText').onChange(function() {
+        resetSketch();
+        redraw();
+    });
+    flowFieldFolder.add(props, 'noiseScale', 0.01, 0.1).step(0.01).onChange(function (value) {
+        noiseScale = value;
+        resetSketch();
+        redraw();
+    });
+    flowFieldFolder.add(props, 'maxLife', 0.1, 2).step(0.1).onChange(function (value) {
+        maxLife = value;
+        resetSketch();
+        redraw();
+    });
+    flowFieldFolder.add(props, 'stepSize', 1, 5).step(1).onChange(function (value) {
+        stepSize = value;
+        resetSketch();
+        redraw();
+    });
+
+    let clearBtn = {
+        clear: function() {
+            currentPalette = colorPalettes[paletteIndex];
+            resetSketch();
+            redraw();
+        }
+    };
+    gui.add(clearBtn, 'clear');
 }
 
 function addParticle() {
     // Create new particle
     let particle = new Particle(rad);
-    if (drawMode !== 1) {
+    if (drawMode === 3 || drawMode === 4) {
         for (let i = 0; i < particles.length; i++) {
             let other = particles[i];
             // Get distance between the coordinates of the particles
@@ -102,13 +159,9 @@ function updateParticles() {
     }
 }
 
-function redrawSketch() {
+function resetSketch() {
+    currentPalette = colorPalettes[paletteIndex];
     graphics = createGraphics(width, height);
     createText();
     background(currentPalette[0]);
-}
-
-function keyReleased() {
-    if (key == '1') drawMode = 1;
-    if (key == '2') drawMode = 2;
 }
