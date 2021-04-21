@@ -3,7 +3,7 @@ class Agent {
         this.setCoordinates();
         if (drawMode == 'Line') this.oldCoordinates;
         this.health = random(0.1, maxHealth);
-        this.lifeRate = random(0.01, 0.04);
+        this.lifeSpan = random(0.01, 0.04);
         this.color = colorPalette[int(random(0, colorPalette.length))]; 
         this.angle;
         if (drawMode == 'Ellipse') this.radius = _r;
@@ -54,8 +54,8 @@ class Agent {
         // Move the agent 
         this.coordinates.x += cos(this.angle) * stepSize;
         this.coordinates.y += sin(this.angle) * stepSize;
-        // Decrease the agent's health by the life rate
-        this.health -= this.lifeRate;
+        // Decrease the agent's health 
+        this.health -= this.lifeSpan;
     }
 
     /**

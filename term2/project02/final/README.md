@@ -1,0 +1,2 @@
+# Assignment 2 - Generative Agency
+A generative typography piece that consists of agents and a text that is rendered into an off-screen graphics. Noise values are used to move the agents around the canvas. Each agent has a random position. Depending on the user's preference, the agents either surround the text or are placed within the text. Run the sketch on a live server to view it.

@@ -1,3 +1,2 @@
-# Creative Coding Portfolio
-This is the source code for my [portfolio site](https://jurizzarc.github.io/creative-coding/).
-
+# Creative Coding 
+A repository of exercises and projects created with p5.js as part of my Creative Coding module
