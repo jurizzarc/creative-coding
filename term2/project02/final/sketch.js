@@ -4,12 +4,13 @@ let colorPalette = [];
 
 let str = 'flow';
 let fontSize = 300;
-let drawMode = 'Point';
+let drawMode = 'Line';
 let backgroundColor = '#F5F5F5';
 let baseColor = '#45C077';
 let schemeType = 'Analogous'; 
 let noiseScale = 0.005;
-let maxLife = 0.4;
+let noiseStrength = 3;
+let maxHealth = 0.3;
 let stepSize = 1;
 
 // Parameters that can be controlled by the user
@@ -22,7 +23,8 @@ let props = {
     schemeType: schemeType,
     withinText: false,
     noiseScale: noiseScale,
-    maxLife: maxLife,
+    noiseStrength: noiseStrength,
+    maxHealth: maxHealth,
     stepSize: stepSize
 };
 
@@ -49,7 +51,6 @@ function draw() {
     removeAgents();
     // Create agents until the maximum amount is reached
     while (agents.length < numOfAgents) addAgent();
-    
     agents.forEach(agent => {
         // Move agent
         agent.update();
@@ -71,6 +72,7 @@ function createText() {
     graphics.fill(graphicsColor);
     graphics.text(str.toUpperCase(), graphics.width/2, graphics.height/2);
     image(graphics, 0, 0);
+    graphics.loadPixels();
 }
 
 /**
@@ -82,7 +84,6 @@ function createGUI() {
     const flowFieldFolder = gui.addFolder('Flow Field');
     textFolder.open();
     flowFieldFolder.open();
-
     // Run resetSketch() and draw() when the value of a parameter changes
     textFolder.add(props, 'text').onChange(function (value) {
         str = value;
@@ -94,7 +95,6 @@ function createGUI() {
         resetSketch();
         redraw();
     });
-
     flowFieldFolder.add(props, 'mode', ['Point', 'Ellipse', 'Line']).onChange(function (value) {
         drawMode = value;
         resetSketch();
@@ -125,8 +125,13 @@ function createGUI() {
         resetSketch();
         redraw();
     });
-    flowFieldFolder.add(props, 'maxLife', 0.1, 2).step(0.1).onChange(function (value) {
-        maxLife = value;
+    flowFieldFolder.add(props, 'noiseStrength', 1, 10).step(1).onChange(function (value) {
+        noiseStrength = value;
+        resetSketch();
+        redraw();
+    });
+    flowFieldFolder.add(props, 'maxHealth', 0.1, 2).step(0.1).onChange(function (value) {
+        maxHealth = value;
         resetSketch();
         redraw();
     });
@@ -135,7 +140,7 @@ function createGUI() {
         resetSketch();
         redraw();
     });
-
+    // Button for 'clearing' the canvas
     let clearBtn = {
         clear: function() {
             resetSketch();
@@ -188,7 +193,7 @@ function addAgent() {
     if (props.withinText) {
         rad = 2;
     } else {
-        rad = 7;
+        rad = 8;
     }
     // Create new agent object from Agent class
     let agent = new Agent(rad);
@@ -208,12 +213,12 @@ function addAgent() {
 }
 
 /**
- * Stops the agent's movement when it has no life left
+ * Stops the agent's movement when it has no health left
  */
 function removeAgents() {
     for (let i = agents.length-1; i >= 0; i--) {
-        // Remove agent from the agents array if it has no life left
-        if (agents[i].life <= 0) agents.splice(i, 1);
+        // Remove agent from the agents array if it has no health left
+        if (agents[i].health <= 0) agents.splice(i, 1);
     }
 }
 

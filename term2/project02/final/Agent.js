@@ -2,7 +2,7 @@ class Agent {
     constructor(_r) {
         this.setCoordinates();
         if (drawMode == 'Line') this.oldCoordinates;
-        this.life = random(0.1, maxLife);
+        this.health = random(0.1, maxHealth);
         this.lifeRate = random(0.01, 0.04);
         this.color = colorPalette[int(random(0, colorPalette.length))]; 
         this.angle;
@@ -16,8 +16,10 @@ class Agent {
         while (this.coordinates == null || 
                props.withinText && !this.isWithinText(this.coordinates) || 
                !props.withinText && this.isWithinText(this.coordinates)) {
-            this.coordinates = createVector(random(width), random(height)); // Position the agent anywhere within the canvas
-            this.oldCoordinates = this.coordinates.copy(); // Create a copy of the coordinates vector
+            // Position the agent anywhere within the canvas
+            this.coordinates = createVector(random(width), random(height)); 
+            // Create a copy of the coordinates vector
+            this.oldCoordinates = this.coordinates.copy(); 
         } 
     }
 
@@ -47,13 +49,13 @@ class Agent {
         let scaleY = this.coordinates.y*noiseScale;
         // Get the noise value 
         let noiseVal = noise(scaleX, scaleY);
-        // Map the noise value to an angle between 0 and TWO_PI
-        this.angle = map(noiseVal, 0, 1, 0, TWO_PI);
+        // Map the noise value to an angle between 0 and TWO_PI and scale by noise strength
+        this.angle = map(noiseVal, 0, 1, 0, TWO_PI) * noiseStrength;
         // Move the agent 
         this.coordinates.x += cos(this.angle) * stepSize;
         this.coordinates.y += sin(this.angle) * stepSize;
-        // Decrease the agent's life by the life rate
-        this.life -= this.lifeRate;
+        // Decrease the agent's health by the life rate
+        this.health -= this.lifeRate;
     }
 
     /**
@@ -96,32 +98,32 @@ class Agent {
         let r = this.color.levels[0];
         let g = this.color.levels[1];
         let b = this.color.levels[2];
-        // Draw the agent as a point
+        // Draw the agent as a point, ellipse or line
         if (drawMode == 'Point') {
             // Stroke weight options
             swOptions = [0.50, 0.75, 1, 1.25];
+            // Randonly select a value from the swOptions array
             sw = swOptions[floor(random()*swOptions.length)];
+            // Alpha options
             aOptions = [50, 55, 60, 65, 70, 75];
+            // Randomly select a value from the aOptions array
             a = aOptions[floor(random()*aOptions.length)];
             noFill();
             strokeWeight(sw);
             stroke(r, g, b, a);
             point(this.coordinates.x, this.coordinates.y);
-        } 
-        // Draw the agent as an ellipse
-        if (drawMode == 'Ellipse') {
+        } else if (drawMode == 'Ellipse') {
             aOptions = [60, 70, 80, 90, 100, 110, 120];
             a = aOptions[floor(random()*aOptions.length)];
             fill(r, g, b, a);
             noStroke();
-            ellipse(this.coordinates.x, this.coordinates.y, this.radius*this.life);
-        } 
-        // Draw the agent as a line
-        if (drawMode == 'Line') {
-            swOptions = [0.25, 0.50, 0.75, 1, 1.25, 1.50, 1.75, 2, 2.25, 2.50, 2.75, 3];
-            sw = swOptions[floor(random()*swOptions.length)];
+            ellipse(this.coordinates.x, this.coordinates.y, this.radius*this.health);
+        } else if (drawMode == 'Line') {
             aOptions = [80, 90, 100, 110, 120, 130, 140, 150];
             a = aOptions[floor(random()*aOptions.length)];
+            let d = random(50)/this.coordinates.dist(this.oldCoordinates);
+            // Get smallest value 
+            sw = min(1, d);
             strokeWeight(sw);
             strokeCap(SQUARE);
             stroke(r, g, b, a);
