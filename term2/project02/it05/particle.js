@@ -10,7 +10,7 @@ class Particle {
      * Get random position inside the text
      */
     getPosition() {
-        while (this.pos == null || !this.isInText(this.pos)) this.pos = createVector(random(width), random(height));
+        while (this.pos == null || this.isInText(this.pos)) this.pos = createVector(random(width), random(height));
     }
 
     /**

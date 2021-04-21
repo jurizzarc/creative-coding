@@ -1,12 +1,12 @@
 const numOfAgents = 1000;
 let agents = [];
-let backgroundColor = '#F5F5F5';
 let colorPalette = [];
 
 let str = 'flow';
 let fontSize = 300;
-let drawMode = 'Ellipse';
-let baseColor = '#FF6F61';
+let drawMode = 'Point';
+let backgroundColor = '#F5F5F5';
+let baseColor = '#45C077';
 let schemeType = 'Analogous'; 
 let noiseScale = 0.005;
 let maxLife = 0.4;
@@ -18,6 +18,7 @@ let props = {
     fontSize: fontSize,
     mode: drawMode,
     baseColor: baseColor,
+    bgColor: backgroundColor,
     schemeType: schemeType,
     withinText: false,
     noiseScale: noiseScale,
@@ -96,6 +97,11 @@ function createGUI() {
 
     flowFieldFolder.add(props, 'mode', ['Point', 'Ellipse', 'Line']).onChange(function (value) {
         drawMode = value;
+        resetSketch();
+        redraw();
+    });
+    flowFieldFolder.addColor(props, 'bgColor').onChange(function (value) {
+        backgroundColor = value;
         resetSketch();
         redraw();
     });
@@ -218,4 +224,11 @@ function removeAgents() {
 function resetSketch() {
     createText();
     background(backgroundColor);
+}
+
+function keyPressed() {
+    if (key == 's' || key == 'S') {
+        // Save current canvas as an image if the user presses S
+        saveCanvas(gd.timestamp(), 'png');
+    }
 }

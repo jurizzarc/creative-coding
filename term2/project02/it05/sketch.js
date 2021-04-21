@@ -1,10 +1,10 @@
-const str = 'FLOW';           // Text to be rendered
+const str = '';           // Text to be rendered
 const numOfParticles = 1000;  // Maximum amount of particles
 let particles = [];           // Where particles are stored
 let bgCol, pgCol, pg, zOff, colors;
 
 function setup() {
-    createCanvas(700, 600);
+    createCanvas(windowWidth, windowHeight);
     smooth();
     pixelDensity(2);
     bgCol = color(4, 17, 35);
@@ -17,10 +17,13 @@ function setup() {
     ];
     // Create off-screen graphics
     pg = createGraphics(width, height);
-    pg.textSize(200);
+    pg.textSize(400);
     pg.textAlign(CENTER, CENTER);
     pg.fill(pgCol);
     pg.text(str, pg.width/2, pg.height/2);
+    for (let i = 0; i < numOfParticles; i++) {
+        particles.push(new Particle());
+    }
     image(pg, 0, 0);
     background(bgCol);
 }

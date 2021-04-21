@@ -99,9 +99,9 @@ class Agent {
         // Draw the agent as a point
         if (drawMode == 'Point') {
             // Stroke weight options
-            swOptions = [0.25, 0.50, 0.75, 1, 1.25, 1.50, 1.75, 2];
+            swOptions = [0.50, 0.75, 1, 1.25];
             sw = swOptions[floor(random()*swOptions.length)];
-            aOptions = [5, 10, 15, 20, 25, 30];
+            aOptions = [50, 55, 60, 65, 70, 75];
             a = aOptions[floor(random()*aOptions.length)];
             noFill();
             strokeWeight(sw);
@@ -110,7 +110,9 @@ class Agent {
         } 
         // Draw the agent as an ellipse
         if (drawMode == 'Ellipse') {
-            fill(r, g, b);
+            aOptions = [60, 70, 80, 90, 100, 110, 120];
+            a = aOptions[floor(random()*aOptions.length)];
+            fill(r, g, b, a);
             noStroke();
             ellipse(this.coordinates.x, this.coordinates.y, this.radius*this.life);
         } 

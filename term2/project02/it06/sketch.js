@@ -1,48 +1,51 @@
-const str = '';           // Text to be rendered
-const numOfParticles = 1000;  // Maximum amount of particles
-let particles = [];           // Where particles are stored
-let bgCol, pgCol, pg, zOff, colors;
+const numOfParticles = 1000;
+const includeStr = false;
+let particles = [];
+let str = 'FLOW';
+let r = 6;
+let graphics, graphicsCol;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
     smooth();
     pixelDensity(2);
-    bgCol = color(4, 17, 35);
-    pgCol = color(0);
-    colors = [
-        color(13, 43, 103),
-        color(50, 162, 173),
-        color(169, 226, 255),
-        color(255, 112, 98)
-    ];
-    // Create off-screen graphics
-    pg = createGraphics(width, height);
-    pg.textSize(400);
-    pg.textAlign(CENTER, CENTER);
-    pg.fill(pgCol);
-    pg.text(str, pg.width/2, pg.height/2);
-    for (let i = 0; i < numOfParticles; i++) {
-        particles.push(new Particle());
-    }
-    image(pg, 0, 0);
-    background(bgCol);
+    // noLoop();
+    graphicsCol = color(0);
+    graphics = createGraphics(width, height);
+    graphics.textSize(400);
+    graphics.textAlign(CENTER, CENTER);
+    graphics.fill(graphicsCol);
+    graphics.text(str, graphics.width/2, graphics.height/2);
+    image(graphics, 0, 0);
+    background(140);
 }
 
 function draw() {
     updateParticles();
+    while (particles.length < numOfParticles) addParticle();
+    
     particles.forEach(particle => {
-        particle.update(); // Update position and life of each particle
-        particle.render(); // Draw each particle on the canvas
+        particle.update();
+        // Draw each particle on the canvas
+        particle.render();
     });
+}
 
-    // if (frameCount >= 150) noLoop();
+function addParticle() {
+    // Create new particle
+    let particle = new Particle(r);
+    for (let i = 0; i < particles.length; i++) {
+        let other = particles[i];
+        // Get distance between the coordinates of the particles
+        let distance = particle.coordinates.dist(other.coordinates);
+        // Do not add particle to the array if it overlaps other circle
+        if (distance < particle.radius + other.radius) return null;
+    }
+    particles.push(particle);
 }
 
 function updateParticles() {
-    // Remove particles with no life left
     for (let i = particles.length-1; i >= 0; i--) {
         if (particles[i].life <= 0) particles.splice(i, 1);
     }
-    // Add particles to the array until it reaches max amount
-    while (particles.length < numOfParticles) particles.push(new Particle());
 }

@@ -9,7 +9,7 @@ class Particle {
      * Get random position inside the text
      */
     getPosition() {
-        while (this.pos == null || !this.isInText(this.pos)) this.pos = createVector(random(width), random(height));
+        while (this.pos == null || this.isInText(this.pos)) this.pos = createVector(random(width), random(height));
     }
 
     /**
@@ -19,7 +19,6 @@ class Particle {
      */
     isInText(_pos) {
         let px = pg.get(floor(_pos.x), floor(_pos.y));
-        
         return (
             px[0] == pgCol.levels[0] &&
             px[1] == pgCol.levels[1] &&
@@ -34,7 +33,7 @@ class Particle {
      */
     update() {
         // The angle is based on a flowfield
-        let angle = noise(this.pos.x*0.01, this.pos.y*0.01, zOff) * TWO_PI;
+        let angle = noise(this.pos.x*0.01, this.pos.y*0.01, zOff) * 360;
         // Create a 2D vector from angle and fc
         let vel = p5.Vector.fromAngle(angle);
         this.pos.add(vel);
@@ -45,8 +44,8 @@ class Particle {
      * Draws an ellipse on the canvas
      */
     render() {
-        fill(bgCol);
-        stroke(0, 200);
+        noFill();
+        stroke(0, floor(random(100, 200)));
         let r = 8 * this.life;
         ellipse(this.pos.x, this.pos.y, r);
     }

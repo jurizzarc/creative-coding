@@ -6,8 +6,8 @@ let bgCol, pgCol, pg, zOff;
 function setup() {
     createCanvas(windowWidth, windowHeight);
     smooth();
-    angleMode(DEGREES);
-    bgCol = color(245);
+    pixelDensity(2);
+    bgCol = color(4, 17, 35);
     pgCol = color(0);
     // Create off-screen graphics
     pg = createGraphics(width, height);
@@ -23,7 +23,6 @@ function setup() {
 }
 
 function draw() {
-    zOff = frameCount * 0.01;
     updateParticles();
     particles.forEach(particle => {
         particle.update(); // Update position and life of each particle
