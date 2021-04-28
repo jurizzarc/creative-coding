@@ -192,9 +192,10 @@ footer strong {
 .grid-item {
     background-color: var(--card-body-bg-color);
     overflow: hidden;
-    -webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.25);
-    -moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.25);
-    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.25);
+    border-radius: 4px;
+    -webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.15);
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.15);
 }
 
 .grid-item-img {
