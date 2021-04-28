@@ -22,14 +22,14 @@
     <section id="sketch"></section>
     <article>
       <header>
-        <h3>Random Walk</h3>
+        <h1>Random Walk</h1>
         <span class="sketch-info">
           The above sketch shows the random path of an ellipse that has any colour grabbed from a defined colour palette.
         </span>
       </header>
-      <h4>Moving the ellipse</h4>
+      <h2>Moving the ellipse</h2>
       <p>
-        The ellipse walks or moves in six possible directions. These directions are defined in an array.
+        The ellipse moves in six possible directions. These directions are defined in an array.
       </p>
       <pre><code class="language-js">let optionsX = [-1, 0, 1];
 let optionsY = [-1, 0, 1];</code></pre>
@@ -69,7 +69,7 @@ function draw() {
   if (y < 0) y = height;
   if (y > height) y = 0;
 }</code></pre>
-      <h4>Drawing the ellipse</h4>
+      <h2>Drawing the Ellipse</h2>
       <p>
         The random colour is generated the same way as the direction of the ellipse is created.
         It is taken from the <code>colours</code> array which consists of six colours.

@@ -1,12 +1,30 @@
 class Circle {
-    constructor(_x, _y, _r) {
-        this.coordinates = createVector(_x, _y);
+    constructor(_r) {
+        this.setCoordinates();
         this.radius = _r;
         this.isGrowing = true;
-        let h = floor(random(190, 220));
-        let s = floor(random(65, 80));
-        let b = floor(random(70, 90));
-        this.strokeC = color(h, s, b);
+        this.color = colorPalette[int(random(1, colorPalette.length))];
+    }
+
+    // Sets the x and y coordinates of the circle
+    setCoordinates() {
+        while (this.coordinates == null || !this.isWithinShape(this.coordinates)) {
+         // Position the circle within the shape
+         this.coordinates = createVector(random(width), random(height)); 
+     } 
+    }
+
+    // Return if the circle is in the shape
+    isWithinShape(_coordinates) {
+        // Get the current pixels of the circle
+        let px = graphics.get(floor(_coordinates.x), floor(_coordinates.y));
+        // Compare the pixels with the color of the text 
+        return (
+            px[0] == graphicsColor.levels[0] &&
+            px[1] == graphicsColor.levels[1] &&
+            px[2] == graphicsColor.levels[2] &&
+            px[3] == graphicsColor.levels[3]
+        );
     }
 
     // Increases radius 
@@ -25,9 +43,8 @@ class Circle {
     }
 
     render() {
-        noFill();
-        strokeWeight(strokeW);
-        stroke(this.strokeC);
+        noStroke();
+        fill(this.color);
         ellipse(this.coordinates.x, this.coordinates.y, this.radius*2);
     }
 }

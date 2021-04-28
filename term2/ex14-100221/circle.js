@@ -2,12 +2,12 @@ class Circle {
     constructor(_x, _y, _r) {
         this.coordinates = createVector(_x, _y);
         this.radius = _r;
-        this.colour = color(360, floor(random(75, 100)), floor(random(70, 100)));
+        this.colour = colorPalette[1];
     }
 
     render() {
-        noFill();
-        stroke(this.colour);
+        noStroke();
+        fill(this.colour);
         ellipse(this.coordinates.x, this.coordinates.y, this.radius*2, this.radius*2);
     }
     

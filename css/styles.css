@@ -1,20 +1,50 @@
-/* @link https://utopia.fyi/generator-mk-ii?c=320,16,1.2,1140,20,1.25,6,2, */
+/* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1140,20,1.25,3,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
+
+:root {
+    --fluid-min-width: 320;
+    --fluid-max-width: 1140;
+
+    --fluid-screen: 100vw;
+    --fluid-bp: calc((var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) / (var(--fluid-max-width) - var(--fluid-min-width)));
+}
+
+@media screen and (min-width: 1140px) {
+    :root {
+        --fluid-screen: calc(var(--fluid-max-width) * 1px);
+    }
+}
+
+:root {
+    --f--2-min: 11.11;
+    --f--2-max: 12.80;
+    --step--2: calc(((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) * var(--fluid-bp));
+
+    --f--1-min: 13.33;
+    --f--1-max: 16.00;
+    --step--1: calc(((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) * var(--fluid-bp));
+
+    --f-0-min: 16.00;
+    --f-0-max: 20.00;
+    --step-0: calc(((var(--f-0-min) / 16) * 1rem) + (var(--f-0-max) - var(--f-0-min)) * var(--fluid-bp));
+
+    --f-1-min: 19.20;
+    --f-1-max: 25.00;
+    --step-1: calc(((var(--f-1-min) / 16) * 1rem) + (var(--f-1-max) - var(--f-1-min)) * var(--fluid-bp));
+
+    --f-2-min: 23.04;
+    --f-2-max: 31.25;
+    --step-2: calc(((var(--f-2-min) / 16) * 1rem) + (var(--f-2-max) - var(--f-2-min)) * var(--fluid-bp));
+
+    --f-3-min: 27.65;
+    --f-3-max: 39.06;
+    --step-3: calc(((var(--f-3-min) / 16) * 1rem) + (var(--f-3-max) - var(--f-3-min)) * var(--fluid-bp));
+}
 
 :root {
     --auto-grid-min-size: 16rem;
     --baseline: 1.5;
 
-    --step--2: clamp(0.6944rem, 0.6532rem + 0.2061vw, 0.8rem);
-    --step--1: clamp(0.8331rem, 0.768rem + 0.3256vw, 1rem);
-    --step-0: clamp(1rem, 0.9024rem + 0.4878vw, 1.25rem);
-    --step-1: clamp(1.2rem, 1.0585rem + 0.7073vw, 1.5625rem);
-    --step-2: clamp(1.44rem, 1.2398rem + 1.0012vw, 1.9531rem);
-    --step-3: clamp(1.7281rem, 1.4498rem + 1.3915vw, 2.4413rem);
-    --step-4: clamp(2.0738rem, 1.692rem + 1.9085vw, 3.0519rem);
-    --step-5: clamp(2.4881rem, 1.9703rem + 2.589vw, 3.815rem);
-    --step-6: clamp(2.9863rem, 2.2909rem + 3.4768vw, 4.7681rem);
-
-    --bg-color: #ededed;
+    --bg-color: #f5f5f5;
     --text-color: #161616;
     --accent-color: #d93838;
     --border-color: #8d8d8d;
@@ -23,7 +53,8 @@
     --code-color: #fff;
 }
 
-html, body {
+html,
+body {
     overflow-x: hidden;
 }
 
@@ -33,31 +64,48 @@ body {
     line-height: var(--baseline);
     color: var(--text-color);
     background-color: var(--bg-color);
+    transition: .3s;
 }
 
-h1, h2, h3, h4, h5 , h6 {
+h1,
+h2,
+h3 {
     font-family: 'Montserrat', sans-serif;
 }
 
-h1, h2, h3 { font-weight: 800; }
-h4, h5, h6 { font-weight: 600; }
-h1 { font-size: var(--step-6); }
-h2 { font-size: var(--step-5); }
-h3 { font-size: var(--step-4); }
-h4 { font-size: var(--step-3); }
-h5 { font-size: var(--step-2); }
-h6 { font-size: var(--step-1); }
+h1 {
+    font-size: var(--step-3);
+    font-weight: 800;
+}
+
+h2 {
+    font-size: var(--step-2);
+    font-weight: 600;
+}
+
+h3 {
+    font-size: var(--step-1);
+    font-weight: 600;
+}
+
+a, .grid-item-img img, .sketch-title {
+    -webkit-transition: ease-in-out 0.3s;
+    transition: ease-in-out 0.3s;
+}
 
 a {
     text-decoration: none;
     color: var(--text-color);
 }
 
-a:hover {
+.sketch-title:hover, .link a:hover, footer a:hover {
     color: var(--accent-color);
-    text-decoration: underline;
-    text-decoration-color: var(--text-color);
 }
+
+/* a:hover {
+    color: var(--accent-color);
+    text-decoration-color: var(--text-color);
+} */
 
 main {
     max-width: 65rem;
@@ -71,7 +119,7 @@ header {
 
 .title {
     letter-spacing: -1px;
-    line-height: var(--step-4);
+    line-height: var(--step-3);
     color: var(--accent-color);
     display: inline-block;
 }
@@ -151,6 +199,10 @@ footer strong {
     vertical-align: middle;
 }
 
+.grid-item-img img:hover {
+    opacity: 0.5;
+}
+
 .grid-item-body {
     padding: 1.2rem 1.125rem;
 }
@@ -188,12 +240,11 @@ article a:hover {
     color: var(--link-hover-color);
 }
 
-article h3 {
-    line-height: var(--step-4);
+article h1 {
     letter-spacing: -1px;
-    border-bottom: 2px solid var(--accent-color);
+    /* border-bottom: 2px solid var(--accent-color);
     display: inline-block;
-    padding-bottom: 0.225rem;
+    padding-bottom: 0.5px; */
     margin-bottom: 0.75rem;
 }
 
@@ -201,37 +252,12 @@ article span.sketch-info {
     display: block;
 }
 
-article h4 {
-    line-height: var(--step-3);
+article h2 {
+    line-height: var(--step-2);
 }
 
-article h4:not(:first-of-type) {
+article h2:not(:first-of-type) {
     margin-top: 3rem;
-}
-
-article section.buttons {
-    padding: 1.5rem 0 1.5rem 0;
-    margin-bottom: 2.625rem;
-    border-bottom: 1px solid var(--border-color);
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
-    grid-gap: 1rem;
-}
-
-section a.button {
-    appearance: button;
-    text-decoration: none;
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    text-align: center;
-    font-size: var(--step-0);
-    font-weight: 600;
-    padding: 1.25rem 1rem;
-}
-
-section a.button:hover {
-    background-color: var(--pre-bg-color);
-    color: var(--text-color);
 }
 
 article p {
@@ -240,20 +266,12 @@ article p {
     margin-top: 1.125rem;
 }
 
-/* article p:first-of-type {
-    margin-bottom: 3rem;
-}
-
-article p:not(:first-of-type) {
-    margin-top: 1.5rem;
-} */
-
 article code {
     font-family: 'JetBrains Mono', monospace;
     background-color: var(--code-bg-color);
     color: var(--code-color);
     font-size: var(--step--1);
-    padding: 1px 8px;
+    padding: 2px 4px;
 }
 
 pre {
@@ -262,13 +280,13 @@ pre {
 }
 
 .hljs {
-    padding: 0.9rem 0.625rem!important;
+    padding: 0.9rem 0.625rem !important;
 }
 
 article figure {
     padding: 1.5rem 0;
     margin: 0 auto;
-    width: 75%;
+    width: 100%;
     height: auto;
 }
 
@@ -281,8 +299,8 @@ section#sketch {
     overflow: hidden;
 }
 
-section#sketch > canvas {
-    width: 100%!important;
-    height: auto!important;
+section#sketch>canvas {
+    width: 100% !important;
+    height: auto !important;
     overflow: hidden;
 }

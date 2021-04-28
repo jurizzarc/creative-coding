@@ -3,11 +3,11 @@ let s = function (p) {
         constructor(_x, _y, _r) {
             this.coordinates = p.createVector(_x, _y);
             this.radius = _r;
-            this.colour = p.color(360, p.floor(p.random(75, 100)), p.floor(p.random(70, 100)));
+            this.colour = colorPalette[1];
         }
         render() {
-            p.noFill();
-            p.stroke(this.colour);
+            p.noStroke();
+            p.fill(this.colour);
             p.ellipse(this.coordinates.x, this.coordinates.y, this.radius*2, this.radius*2);
         }
         dock(_other) {
@@ -23,21 +23,20 @@ let s = function (p) {
     };
     let circles = [];
     let numOfCircles = 200;
+    let colorPalette = ['#E8E7DE', '#3E8959'];
     let minR = 5;
     let maxR = 10;
-    let fc = 75;
     let circle0;
     p.setup = function() {
         let sketchW = document.getElementById('sketch').offsetWidth;
         let sketchH = document.getElementById('sketch').offsetHeight;
         let renderer = p.createCanvas(sketchW, sketchH);
         renderer.parent('sketch');
-        p.colorMode(p.HSB);
         circle0 = new Circle(p.width/2, p.height/2, maxR);
         circles.push(circle0);
     };
     p.draw = function() {
-        p.background(217, 0, 100);
+        p.background(colorPalette[0]);
         if (circles.length <= numOfCircles) {
             let randX = p.random(p.width);
             let randY = p.random(p.height);

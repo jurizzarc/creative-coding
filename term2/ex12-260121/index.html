@@ -24,24 +24,32 @@
     <section id="sketch"></section>
     <article>
       <header>
-        <h3>Random Angles</h3>
+        <h1>Random Angles</h1>
         <span class="sketch-info">
           The sketch above shows the direction of a point and how it bounces at a random angle when it hits certain boundaries.
           The other point mirrors its movement.
         </span>
       </header>
-      <h4>Moving the points</h4>
+      <h2>Moving the Points</h2>
       <p>
-        The blue point initially moves in a diagonal direction using <code>sin()</code> and <code>cos()</code>.
+        The first point initially moves in a diagonal direction from the upper left corner of the canvas. 
+        The point moves based on an angle of 45° that is put into the <code>sin()</code> and <code>cos()</code> methods.
       </p>
 <pre><code class="language-js">let stepSize = 1;
 let angle = 45;
-let x1, y1, x2, y2;
+let sw = 1;
+let x1, y1, x2, y2, colorPalette;
 
 function setup() {
   [...]
   x1 = 0;
   y1 = 0;
+  colorPalette = [
+    color(225, 221, 191),
+    color(4, 37, 58),
+    color(76, 131, 122)
+  ];
+  background(colorPalette[0]);
 }
 
 function draw() {
@@ -49,27 +57,26 @@ function draw() {
   for (let i = 0; i < speed; i++) {
     x1 += cos(radians(angle)) * stepSize;
     y1 += sin(radians(angle)) * stepSize;
-    stroke('#2FC6D0');
-    strokeWeight(2);
+    stroke(colorPalette[1]);
+    strokeWeight(sw);
     point(x1, y1);
   }
 }
 </code></pre>
       <p>
-        The red point mirrors the blue point's movement by taking away its current position from the width and height of
+        The other point mirrors the first point's movement by taking away the first point's current position from the width and height of
         the canvas.
       </p>
 <pre><code>for (let i = 0; i < speed; i++) {
   [...]
   x2 = width - x1;
   y2 = height - y1;
-  stroke('#D0392F');
+  stroke(colorPalette[2]);
   point(x2, y2);
 }</code></pre>
-      <h4>Checking if the point reaches the middle and outside of the canvas</h4>
+      <h2>Changing the Angle of the Point</h2>
       <p>
-        The point bounces at a random angle when it reaches the centre and an edge of the canvas. There is control over how
-        this angle is generated.
+        The point bounces at a random angle when it reaches the centre and an edge of the canvas. Its stroke weight also changes.
       </p>
 <pre><code>let angleCount = 5;
 
@@ -80,6 +87,9 @@ function draw() {
 
 function getRandomAngle(_x, _y) {
   let randomAngle = (floor(random(-angleCount, angleCount)) + 0.5) * 90 / angleCount;
+  let randomAngle = (floor(random(-angleCount, angleCount)) + 0.5) * 90 / angleCount;
+  let swOptions = [1, 2, 3, 4, 5];
+  sw = swOptions[floor(random()*swOptions.length)];
   if (_x > width/2) return randomAngle + 180;
   if (_x < 0) return randomAngle;
   if (_y > height) return randomAngle - 90;

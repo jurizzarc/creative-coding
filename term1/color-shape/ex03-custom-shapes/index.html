@@ -7,29 +7,31 @@
   <title>Custom Shapes</title>
   <!-- CSS Reset -->
   <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Mulish:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&family=Montserrat:wght@600;800&family=Work+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet">
+  <!-- Syntax Highlighting -->
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/stackoverflow-dark.min.css">
   <link rel="stylesheet" href="../../../css/styles.css" type="text/css">
 </head>
 
 <body>
   <main>
+    <section id="sketch"></section>
+
     <article>
       <header>
-        <h2>Custom Shapes</h2>
-        <h6>Exercise 03 &mdash; 30 Sep 2020</h6>
+        <h1>Custom Shapes</h1>
+        <span class="sketch-info">
+          The p5.js library includes the functions <code>beginShape()</code>, <code>endShape()</code>, and <code>vertex()</code> which allow us to create more complex shapes. 
+          In this exercise, these functions were used to draw the HSB colour wheel.
+        </span>
       </header>
-      <section class="buttons">
-        <a class="button" href="sketch.html">View Sketch</a>
-        <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/color-shape/main-exercises/ex03-custom-shapes">Source Code</a>
-      </section>
 
-      <p>
-        The p5.js library includes the functions <code>beginShape()</code>, <code>endShape()</code>, and <code>vertex()</code> which allow us to create more complex shapes. 
-        In this exercise, these functions were used to draw the HSB colour wheel.
-      </p>
-
-      <h3>Setting up the canvas</h3>
+      <h2>Setting Up the Canvas</h2>
       <p>
         By default, the mode in which the angles would be interpreted and calculated is set to <code>RADIANS</code>. In this exercise, the
         <code>angleMode()</code> is set to <code>DEGREES</code>. The <code>colorMode</code>, similar to 
@@ -38,27 +40,23 @@
         that are defined for this exercise are the width and height of the canvas and the background colour.
         The outline of the shapes are also disabled by the <code>noStroke()</code> function.
       </p>
-      <pre><code>
-function setup() {
+      <pre><code class="language-js">function setup() {
   createCanvas(500, 500);
   background(224);
   angleMode(DEGREES);
   colorMode(HSB, 360, 100, 100);
   noStroke();
-}
-      </code></pre>
+}</code></pre>
       <p>
         The following are values needed to create the colour wheel. These values are
         defined in the <code>setup()</code> function.
       </p>
 
-      <pre><code>
-centerX = width/2;
+      <pre><code>centerX = width/2;
 centerY = height/2;
 numOfSegments = 12;
 stepAngle = 360/numOfSegments;
-radius = 100;
-      </code></pre>
+radius = 100;</code></pre>
       <p>
         The <code>centerX</code> and <code>centerY</code> values will be used to place the centre 
         point of the colour wheel on the centre of the canvas. The <code>numOfSegments</code> refers
@@ -67,7 +65,7 @@ radius = 100;
         distance between the centre and the boundary of the colour wheel.
       </p>
 
-      <h3>Drawing the colour wheel</h3>
+      <h2>Drawing the Colour Wheel</h2>
       <p>
         To draw the HSB colour wheel, I used the <code>beginShape()</code>, <code>endShape()</code>,
         and <code>vertex()</code> functions. <code>beginShape()</code> starts recording the vertices
@@ -79,8 +77,7 @@ radius = 100;
         and <code>endShape</code>. The vertex coordinates for the custom shape are defined by using this function.
       </p>
 
-      <pre><code>
-function draw() {
+      <pre><code class="language-js">function draw() {
   beginShape(TRIANGLE_FAN);
     vertex(centerX, centerY);
     for (let i = 0; i <= 360; i += stepAngle) {
@@ -90,8 +87,7 @@ function draw() {
       vertex(vx, vy);
     }
   endShape();
-}
-      </code></pre>
+}</code></pre>
 
       <p>
         In the above code, the custom shape starts at the centre of the canvas. This point would
@@ -111,11 +107,23 @@ function draw() {
 
     <footer>
       <p>
-          Jurizza Cuaresma<br/>
-          <a href="../../../index.html">Home</a> &#8725; <a href="https://github.com/jurizzarc/creative-coding">GitHub</a>
+          <strong>Jurizza Cuaresma</strong><br />
+          <a href="../../../index.html">Home</a> &#8725;
+          <a href="mailto:jurizzarc@gmail.com">Contact</a> &#8725;
+          <a href="https://github.com/jurizzarc/creative-coding">GitHub</a>
       </p>
-    </footer>
+  </footer>
   </main>
+
+   <!-- Syntax Highlighting -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+   <script>
+       hljs.highlightAll();
+   </script>
+   <!-- P5 Sketch -->
+   <script src="../../../libraries/p5/p5.min.js" type="text/javascript"></script>
+   <script src="../../../libraries/p5/p5.dom.min.js" type="text/javascript"></script>
+   <!-- <script src="preview.js" type="text/javascript"></script> -->
 </body>
 
 </html>

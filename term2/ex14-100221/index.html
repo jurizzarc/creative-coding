@@ -24,23 +24,22 @@
 
     <article>
       <header>
-        <h3>Growth</h3>
+        <h1>Growth</h1>
         <span class="sketch-info">
           A circle with a random radius and colour is drawn on the canvas and positioned next to the circle
           that is closest to it.
         </span>
       </header>
-      <h4>Creating the first circle</h4>
+      <h2>Creating the First Circle</h2>
       <p>
         A circle object created from the class <code>Circle</code> has the following properties. This class takes values for the 
-        x and y coordinates and the radius. The <code>colorMode()</code> is set to HSB and the random colour that
-        is generated is a shade of red.
+        x and y coordinates and the radius. The colour of the circle is taken from a defined colour palette.
       </p>
 <pre><code class="language-js">class Circle {
   constructor(_x, _y, _r) {
     this.coordinates = createVector(_x, _y);
     this.radius = _r;
-    this.colour = color(360, floor(random(75, 100)), floor(random(70, 100)));
+    this.colour = colorPalette[1];
   }
 }</code></pre>
       <p>
@@ -57,7 +56,7 @@ function setup() {
   circle0 = new Circle(width/2, height/2, maxRadius);
   circles.push(circle0);
 }</code></pre>
-      <h4>Creating the other circles</h4>
+      <h2>Creating the Other Circles</h2>
       <p>
         The <code>addCircle()</code> function creates a new circle object each time <code>draw()</code> runs. At first, 
         the circles that are created are given random <code>x</code> and <code>y</code> positions. 
@@ -75,7 +74,7 @@ function addCircle() {
   let newC = new Circle(randX, randY, randR);
   circles.push(newC);
 }</code></pre>
-      <h4>Drawing the circles</h4>
+      <h2>Drawing the Circles</h2>
       <p>
         The <code>render()</code> method of class <code>Circle</code> draws an ellipse and is called
         on each circle object.
@@ -99,10 +98,7 @@ function draw() {
         Since the algorithm that places the circle to the shape nearest to it has not been applied yet,
         the circles are positioned randomly on the canvas.
       </p>
-      <figure>
-        <img src="images/addCircle1.png" alt="Circles randomly positioned on the canvas">
-      </figure>
-      <h4>Finding the closest circle</h4>
+      <h2>Finding the Closest Circle</h2>
       <p>
         The Euclidean Distance is used to find the closest circle. The distance between the points of the circle <code>newC</code> and 
         the other circle <code>otherC</code> is calculated using <code>p5.Vector.dist()</code>. The circle with the lowest distance is the
@@ -149,9 +145,6 @@ function addCircle() {
         The circle that is created each time <code>draw()</code> runs is now placed next to the
         circle that is closest to it.
       </p>
-      <figure>
-        <img src="images/addCircle2.png" alt="With docking">
-      </figure>
     </article>
     <footer>
       <p>

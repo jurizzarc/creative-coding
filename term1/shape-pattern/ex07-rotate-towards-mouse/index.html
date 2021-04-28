@@ -4,44 +4,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotate towards mouse</title>
+  <title>Rotate Towards Mouse</title>
   <!-- CSS Reset -->
   <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Mulish:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&family=Montserrat:wght@600;800&family=Work+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet">
+  <!-- Syntax Highlighting -->
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/stackoverflow-dark.min.css">
   <link rel="stylesheet" href="../../../css/styles.css" type="text/css">
 </head>
 
 <body>
   <main>
+    <section id="sketch"></section>
+
     <article>
       <header>
-        <h2>Rotate towards mouse</h2>
-        <h6>Exercise 07 &mdash; 20 Oct 2020</h6>
+        <h1>Rotate towards mouse</h1>
+        <span class="sketch-info">
+          For this sketch, we applied what we've learned in the previous exercises such as transformations and colour to create a pattern.
+          The pattern consists of circles that rotate towards the current mouse position.
+        </span>
       </header>
 
-      <section class="buttons">
-        <a class="button" href="sketch.html">View Sketch</a>
-        <a class="button" href="https://github.com/jurizzarc/creative-coding/tree/master/shape-pattern/main-exercises/ex07-rotate-towards-mouse">Source Code</a>
-      </section>
-
-      <p>
-        In this sketch, we applied what we've learned in the previous exercises such as transformations and colour to create a pattern.
-        The pattern consists of circles that rotate towards the current mouse position.
-      </p>
-
-      <h3>Setting up the canvas</h3>
+      <h2>Setting Up the Canvas</h2>
       <p>
         The following are global variables needed to define the initial properties of the canvas and the circles that
         will be drawn later.
       </p>
-      <pre><code>
-let shapes = [];
+      <pre><code class="language-js">let shapes = [];
 let canvasSize = 500;
 let numOfShapes = 20;
 let shapeSize = canvasSize/numOfShapes;
-let col, d;
-      </code></pre>
+let col, d;</code></pre>
       <p>
         The empty <code>shapes</code> array is where the circles created from the <code>Shape</code> class will be added.
         <code>canvasSize</code> refers to the width and height of the canvas and <code>numOfShapes</code> is the number
@@ -49,25 +48,22 @@ let col, d;
         <code>col</code> is the colour of each circle and <code>d</code> stands for distance. These variables will be used in 
         the <code>Shape</code> class.
       </p>
-      <pre><code>
-function setup() {
+      <pre><code class="language-js">function setup() {
   createCanvas(canvasSize, canvasSize);
   ellipseMode(CENTER);
   colorMode(RGB, numOfShapes, numOfShapes, numOfShapes);
-}
-      </code></pre>
+}</code></pre>
       <p>
         As shown in the code above, the color mode is set to RGB and the range for the red, green, and blue are
         all set to the number of shapes on the canvas. This is for generating an interesting colour palette.
       </p>
 
-      <h3>The Shape class</h3>
+      <h2>The Shape class</h2>
       <p>
         The circle objects that are drawn on the canvas are created from a class called <code>Shape</code>. A circle object has the following
         properties.
       </p>
-      <pre><code>
-class Shape {
+      <pre><code class="language-js">class Shape {
   constructor(_i, _j) {
     this.i = _i;
     this.j = _j;
@@ -76,8 +72,7 @@ class Shape {
     this.y = this.j * this.s + this.s/2; 
     this.angle = 0;
   }
-}
-      </code></pre>
+}</code></pre>
       <p>
         <code>this.i</code> and <code>this.j</code> are index numbers. <code>this.s</code> is initialised to 
         the value assigned to the global variable <code>shapeSize</code>. <code>this.x</code> and <code>this.y</code>
@@ -89,22 +84,19 @@ class Shape {
         Before drawing the circles on the canvas, I first populated the <code>shapes</code> array
         in <code>setup()</code>.
       </p>
-      <pre><code>
-for (let i = 0; i < numOfShapes; i++) {
+      <pre><code class="language-js">for (let i = 0; i < numOfShapes; i++) {
   for (let j = 0; j < numOfShapes; j++) {
     shapes.push(new Shape(i, j));
   }
-}
-      </code></pre>
+}</code></pre>
 
-      <h3>Drawing the circles on the canvas</h3>
+      <h2>Drawing the Circles</h2>
       <p>
         I have a method called <code>render()</code> in the <code>Shape</code> class which draws a circle object on the canvas when called. 
         Each circle has its own origin point which are the values assigned to the properties <code>this.x</code> and <code>this.y</code>. 
         The colour of the outline of each circle depends on its position on the canvas. 
       </p>
-      <pre><code>
-render() {
+      <pre><code class="language-js">render() {
   push();
   translate(this.x, this.y);
 
@@ -115,71 +107,59 @@ render() {
   ellipse(0, 0, this.s, this.s);
 
   pop();
-}
-      </code></pre>
+}</code></pre>
       <p>
         Next, the <code>render()</code> method is called on each circle object in the <code>draw()</code> function. The result
         is 400 circles drawn on the canvas, each has no fill colour and has a different outline or stroke colour.
       </p>
-      <pre><code>
-function draw() {
+      <pre><code class="language-js">function draw() {
   background(0);
   shapes.forEach(shape => {
     shape.render();
   });
-}
-      </code></pre>
+} </code></pre>
 
-      <h3>Rotating each circle towards mouse position</h3>
+      <h2>Rotating Each Circle Towards Mouse Position</h2>
       <p>
         The method <code>updateAngle()</code> changes the inital angle of a circle object. It has the parameters
         <code>_mx</code> and <code>_my</code>. These parameters refer to the <code>mouseX</code> and <code>mouseY</code> variables that return
         the current mouse position on the screen. <code>atan2()</code> calculates the angle in radians from each circle to the mouse position.
         The <code>updateAngle()</code> method is added just before the <code>render()</code> method in the <code>Shape</code> class.
       </p>
-      <pre><code>
-updateAngle(_mx, _my) {
+      <pre><code class="language-js">updateAngle(_mx, _my) {
   let dx = _mx - this.x;
   let dy = _my - this.y;
   this.angle = atan2(dy, dx);
-}
-      </code></pre>
+}</code></pre>
       <p>
         The code below rotates a circle by the current angle value. It is included in the <code>render()</code> method after
         the translation.
       </p>
       
-      <pre><code>
-rotate(this.angle);
-      </code></pre>
+      <pre><code class="language-js">rotate(this.angle);</code></pre>
       <p>
         Then the <code>updateAngle()</code> method is called on each circle object in the <code>draw()</code> function.
       </p>
-      <pre><code>
-shapes.forEach(shape => {
+      <pre><code class="language-js">shapes.forEach(shape => {
   shape.updateAngle(mouseX, mouseY);
   shape.render();
-});
-      </code></pre>
+});</code></pre>
       <p>
         Smaller circles are drawn on the canvas to make the rotation more obvious. The following lines of code are added
         in the <code>render()</code> method before <code>pop()</code>.
       </p>
-      <pre><code>
-fill(255);
+      <pre><code class="language-js">fill(255);
 noStroke();
 ellipse(this.s/4, 0, this.s/2, this.s/2);
       </code></pre>
 
-      <h3>Changing the size of each circle</h3>
+      <h2>Changing the Size of Each Circle</h2>
       <p>
-        To better the mouse interactivity of the sketch, the size of each circle also changes according to the current
+        To better the interactivity of the sketch, the size of each circle also changes according to the current
         mouse position.
       </p>
-      <pre><code>
-d = dist(mouseX, mouseY, this.x, this.y);
-this.s = map(d, 0, width, 10, shapeSize);
-      </code></pre>
+      <pre><code class="language-js">d = dist(mouseX, mouseY, this.x, this.y);
+this.s = map(d, 0, width, 10, shapeSize);</code></pre>
       <p>
         The <code>dist()</code> function calculates the distance between the mouse position and the circle position. The result
         is scaled from a range between 0 and the <code>width</code> to a range between 10 and the value assigned to the <code>shapeSize</code>
@@ -189,11 +169,23 @@ this.s = map(d, 0, width, 10, shapeSize);
 
     <footer>
       <p>
-          Jurizza Cuaresma<br/>
-          <a href="../../../index.html">Home</a> &#8725; <a href="https://github.com/jurizzarc/creative-coding">GitHub</a>
+          <strong>Jurizza Cuaresma</strong><br />
+          <a href="../../../index.html">Home</a> &#8725;
+          <a href="mailto:jurizzarc@gmail.com">Contact</a> &#8725;
+          <a href="https://github.com/jurizzarc/creative-coding">GitHub</a>
       </p>
-    </footer>
+  </footer>
   </main>
+
+  <!-- Syntax Highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+  <script>
+      hljs.highlightAll();
+  </script>
+  <!-- P5 Sketch -->
+  <script src="../../../libraries/p5/p5.min.js" type="text/javascript"></script>
+  <script src="../../../libraries/p5/p5.dom.min.js" type="text/javascript"></script>
+  <!-- <script src="preview.js" type="text/javascript"></script> -->
 </body>
 
 </html>

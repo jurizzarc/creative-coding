@@ -1,5 +1,6 @@
 let circles = [];
 let numOfCircles = 300;
+let colorPalette = ['#E8E7DE', '#3E8959'];
 let minR = 5;
 let maxR = 10;
 let circle0;
@@ -13,7 +14,7 @@ function setup() {
 }
 
 function draw() {
-    background(217, 0, 100);
+    background(colorPalette[0]);
     if (circles.length <= numOfCircles) {
         let randX = random(width);
         let randY = random(height);

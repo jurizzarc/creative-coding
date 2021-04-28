@@ -22,13 +22,13 @@
     <section id="sketch"></section>
     <article>
       <header>
-        <h3>Curve Vertex and Noise</h3>
+        <h1>Curve Vertex and Noise</h1>
         <span class="sketch-info">
           Using other built in functions of the p5.js library to draw a circle. Perlin Noise is also applied to generate
           the above shape.
         </span>
       </header>
-      <h4>Creating the points</h4>
+      <h2>Creating the points</h2>
       <p>
         An object or point created from the class <code>Point</code> has a single initial property that
         describes its x and y positions on the canvas. This is stored in a vector.
@@ -57,75 +57,7 @@ function setup() {
     points.push(new Point(xPos, yPos));
   }
 }</code></pre>
-      <h4>Drawing points around a circle</h4>
-      <p>
-        The method <code>drawEllipse()</code> is called on each point object, which draws a small ellipse on the canvas.
-      </p>
-<pre><code class="language-js">class Point {
-  [...]
-  drawEllipse() {
-    noStroke();
-    fill('#00C2BA');
-    ellipse(this.coordinates.x, this.coordinates.y, 5);
-  }
-}
-
-function draw() {
-  background('#000');
-  push();
-  // Move origin to the centre
-  translate(width/2, height/2);
-  points.forEach(point => {
-    point.drawEllipse();
-  });
-  pop();
-}</code></pre>
-      <p>In the example below, the circle is made up of 12 segments or has 12 points around it.</p>
-      <figure>
-        <img src="images/drawEllipse.png" alt="Points around a circle">
-      </figure>
-      <h4>Using line() to draw a circle</h4>
-      <p>
-        Another way of creating a circle is by using the <code>line()</code> method. The <code>drawLine()</code> method of class <code>Point</code>
-        takes an index number. This method draws a line starting from the x and y points of the point object calling it
-        to the x and y positions of the point that matches the index number passed to the method. The <code>drawLines()</code> function takes an array
-        and draws the lines that will form the circle.
-      </p>
-<pre><code class="language-js">class Point {
-  [...]
-  drawLine(_index) {
-    stroke('#00C2BA');
-    line(this.coordinates.x, this.coordinates.y, points[_index].coordinates.x, points[_index].coordinates.y);
-  }
-}
-
-function draw() {
-  [...]
-  drawLines(points);
-  pop();
-}
-
-function drawLines(_array) {
-  for (let i = 0; i < _array.length - 1; i++) {
-    _array[i].drawLine(i+1);
-  }
-  line(_array[_array.length-1].coordinates.x, _array[_array.length-1].coordinates.y,
-    _array[0].coordinates.x, _array[0].coordinates.y);
-}</code></pre>
-      <p>
-        In the example below, there are only 12 segments of the shape making it look like a twelve-sided polygon.
-      </p>
-      <figure>
-        <img src="images/drawLines1.png" alt="Draw Lines 1">
-      </figure>
-      <p>
-        The higher the amount of segments is, the closer the shape resembles a circle. In the image below, the 
-        shape is made up of 180 segments.
-      </p>
-      <figure>
-        <img src="images/drawLines2.png" alt="Draw Lines 2">
-      </figure>
-      <h4>Using curveVertex() to draw a circle</h4>
+      <h2>Using curveVertex() to Draw a Circle</h2>
       <p>
         The <code>curveVertex()</code> method is used in conjunction with <code>beginShape()</code> and <code>endShape()</code>. The 
         <code>drawCurveVertex()</code> method creates a vertex coordinate for the circle. The <code>drawCurveVertices()</code> function
@@ -160,7 +92,7 @@ function drawCurveVertices(_array) {
   curveVertex(_array[0].coordinates.x, _array[0].coordinates.y);
   endShape();
 }</code></pre>
-      <h4>Adding Perlin Noise</h4>
+      <h2>Adding Perlin Noise</h2>
       <p>
         The points that form the circle move by using noise values. The cosine and sine of <code>i</code>
         goes between -1 and 1 and this is mapped to a value ranging between 0 and <code>maxNoise</code> which in

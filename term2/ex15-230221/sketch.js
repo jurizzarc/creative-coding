@@ -1,23 +1,32 @@
 let circles = [];
-let minR = 10;
-let maxR = 20;
-let strokeW = 2;
+let minR = 3;
+let maxR = 25;
+let gap = 1;
+let graphics, graphicsColor, colorPalette;
 
 function setup() {
     createCanvas(500, 500);
-    colorMode(HSB);
     // noLoop();
-    let circle0 = new Circle(width/2, height/2, maxR*2);
-    circles.push(circle0);
+    graphicsColor = color(0);
+    colorPalette = [
+        color(255, 238, 173),
+        color(150, 206, 180),
+        color(255, 111, 105),
+        color(255, 204, 92),
+        color(136, 216, 176)
+    ];
+    graphics = createGraphics(width, height);
+    graphics.fill(graphicsColor);
+    graphics.rectMode(CENTER);
+    graphics.rect(width/2, height/2, 350, 350);
+    image(graphics, 0, 0);
+    background(colorPalette[0]);
 }
 
 function draw() {
-    background(255);
     let randR = floor(random(minR, maxR));
-    let randX = random(randR, width-randR);
-    let randY = random(randR, height-randR);
     // Create a circle
-    let newC = new Circle(randX, randY, randR);
+    let newC = new Circle(randR);
     addCircle(newC);
 
     for (let i = 0; i < circles.length; i++) {
@@ -30,14 +39,14 @@ function draw() {
                 if (other != circle) {
                     let distance = circle.coordinates.dist(other.coordinates);
                     // Stop circle from growing if it collides with other circle
-                    if (distance < circle.radius + other.radius + strokeW) circle.isGrowing = false;
+                    if (distance < circle.radius + other.radius + gap) circle.isGrowing = false;
                 }
             }
         }
         // Draw circle
         circles[i].render();
         // Increase its radius
-        // circles[i].grow();
+        circles[i].grow();
     }
 }
 
